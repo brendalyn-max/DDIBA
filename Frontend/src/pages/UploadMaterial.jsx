@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function UploadMaterial() {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function UploadMaterial() {
         <div className="upload-header-actions">
 
           <span className="upload-streak-pill">
-            🔥 5
+            <Icon name="flame" /> 5
           </span>
 
           <div className="upload-avatar">
@@ -55,7 +56,7 @@ export default function UploadMaterial() {
           onClick={() => navigate("/dashboard")}
           aria-label="Back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <h2>New Learning Topic</h2>
@@ -64,13 +65,13 @@ export default function UploadMaterial() {
           className="upload-menu-btn"
           aria-label="More options"
         >
-          ☷
+          <Icon name="list" />
         </button>
 
       </section>
 
       <span className="upload-reader-label">
-        ✨ DDIBA INTELLIGENT READER
+        <Icon name="sparkle" /> DDIBA INTELLIGENT READER
       </span>
 
       <section className="upload-heading">
@@ -91,14 +92,14 @@ export default function UploadMaterial() {
       <section className="free-tier-card">
 
         <span>
-          ✨ Free tier: 3 topics remaining
+          <Icon name="sparkle" /> Free tier: 3 topics remaining
         </span>
 
         <button
           type="button"
           onClick={() => navigate("/subscription")}
         >
-          View Plans ✨
+          View Plans <Icon name="sparkle" />
         </button>
 
       </section>
@@ -110,7 +111,7 @@ export default function UploadMaterial() {
           className={activeTab === "type" ? "active" : ""}
           onClick={() => setActiveTab("type")}
         >
-          ≋ Type / Paste
+          <Icon name="type" /> Type / Paste
         </button>
 
         <button
@@ -118,7 +119,7 @@ export default function UploadMaterial() {
           className={activeTab === "voice" ? "active" : ""}
           onClick={() => setActiveTab("voice")}
         >
-          🎙 Voice Dictate
+          <Icon name="mic" /> Voice Dictate
         </button>
 
         <button
@@ -126,7 +127,7 @@ export default function UploadMaterial() {
           className={activeTab === "file" ? "active" : ""}
           onClick={() => setActiveTab("file")}
         >
-          ☁ Upload File
+          <Icon name="cloudUpload" /> Upload File
         </button>
 
       </section>
@@ -137,14 +138,14 @@ export default function UploadMaterial() {
           <div className="upload-text-card-top">
 
             <strong>
-              ≋ Raw text or question prompt
+              <Icon name="type" /> Raw text or question prompt
             </strong>
 
             <button
               type="button"
               onClick={() => setText("")}
             >
-              ↻ Clear
+              <Icon name="refresh" /> Clear
             </button>
 
           </div>
@@ -160,13 +161,13 @@ export default function UploadMaterial() {
           <div className="upload-text-card-bottom">
 
             <span className="word-count-pill">
-              ◉ {wordCount} words entered
+              <Icon name="check" /> {wordCount} words entered
             </span>
 
             <div className="upload-text-actions">
 
               <button type="button">
-                🎙 Dictate
+                <Icon name="mic" /> Dictate
               </button>
 
               <button
@@ -198,7 +199,7 @@ export default function UploadMaterial() {
         <section className="upload-alternative-card">
 
           <div className="alternative-icon">
-            🎙
+            <Icon name="mic" />
           </div>
 
           <h3>Voice Dictation</h3>
@@ -219,7 +220,7 @@ export default function UploadMaterial() {
         <section className="upload-alternative-card">
 
           <div className="alternative-icon">
-            ☁
+            <Icon name="cloudUpload" />
           </div>
 
           <h3>Upload Learning Material</h3>
@@ -256,7 +257,7 @@ export default function UploadMaterial() {
             className={subject === "Biology" ? "active" : ""}
             onClick={() => setSubject("Biology")}
           >
-            🧬 Biology
+            <Icon name="dna" /> Biology
           </button>
 
           <button
@@ -264,7 +265,7 @@ export default function UploadMaterial() {
             className={subject === "History" ? "active" : ""}
             onClick={() => setSubject("History")}
           >
-            📜 History
+            <Icon name="scroll" /> History
           </button>
 
           <button
@@ -284,7 +285,7 @@ export default function UploadMaterial() {
         onClick={() => navigate("/lesson")}
         disabled={!text.trim() && activeTab === "type"}
       >
-        ✨ Make it easier <span>→</span>
+        <Icon name="sparkle" /> Make it easier <Icon name="arrowRight" />
       </button>
 
       <nav className="upload-bottom-nav">
@@ -292,14 +293,14 @@ export default function UploadMaterial() {
         <button
           onClick={() => navigate("/dashboard")}
         >
-          <span>◈</span>
+          <span><Icon name="book" /></span>
           <small>Learn</small>
         </button>
 
         <button
           onClick={() => navigate("/practice")}
         >
-          <span>◉</span>
+          <span><Icon name="play" /></span>
           <small>Practice</small>
         </button>
 
@@ -307,14 +308,14 @@ export default function UploadMaterial() {
           className="active"
           onClick={() => navigate("/upload")}
         >
-          <span>✚</span>
+          <span><Icon name="file" /></span>
           <small>Notes</small>
         </button>
 
         <button
           onClick={() => navigate("/progress")}
         >
-          <span>⌁</span>
+          <span><Icon name="chart" /></span>
           <small>Progress</small>
         </button>
 

@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function SessionSummary() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function SessionSummary() {
           onClick={() => navigate("/flashcards")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="session-header-title">
@@ -29,7 +30,7 @@ export default function SessionSummary() {
           ✓ Session Completed
         </span>
 
-        <h1>Great session, Sarah! ☀️</h1>
+        <h1>Great session, Sarah! <Icon name="sun" /></h1>
 
         <p>
           You reviewed 15 flashcards with calm, focused recall.
@@ -67,12 +68,12 @@ export default function SessionSummary() {
         <div className="session-divider"></div>
 
         <div className="session-detail-row">
-          <span>⏱ Time spent</span>
+          <span><Icon name="clock" /> Time spent</span>
           <strong>5 mins</strong>
         </div>
 
         <div className="session-detail-row">
-          <span>🔥 4-day streak intact!</span>
+          <span><Icon name="flame" /> 4-day streak intact!</span>
           <strong>+35 XP</strong>
         </div>
 
@@ -127,7 +128,7 @@ export default function SessionSummary() {
       <section className="session-insight-card">
 
         <div className="session-insight-icon">
-          ✨
+          <Icon name="sparkle" />
         </div>
 
         <div className="session-insight-copy">

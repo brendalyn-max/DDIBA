@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function OnboardingIntro() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function OnboardingIntro() {
           onClick={() => navigate("/auth")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
@@ -27,11 +28,11 @@ export default function OnboardingIntro() {
       <section className="onboarding-hero-card">
 
         <div className="onboarding-hero-circle">
-          <div className="onboarding-hero-icon">🧠</div>
+          <div className="onboarding-hero-icon"><Icon name="brain" /></div>
         </div>
 
         <span className="onboarding-start-pill">
-          🧠 A thoughtful start
+          <Icon name="brain" /> A thoughtful start
         </span>
 
         <h1>Let's get to know how you learn.</h1>
@@ -46,7 +47,7 @@ export default function OnboardingIntro() {
 
         <article className="onboarding-benefit-card">
           <div className="benefit-icon purple">
-            🧠
+            <Icon name="brain" />
           </div>
 
           <div className="benefit-copy">
@@ -60,7 +61,7 @@ export default function OnboardingIntro() {
 
         <article className="onboarding-benefit-card">
           <div className="benefit-icon green">
-            🧘
+            <Icon name="sparkle" />
           </div>
 
           <div className="benefit-copy">
@@ -74,7 +75,7 @@ export default function OnboardingIntro() {
 
         <article className="onboarding-benefit-card">
           <div className="benefit-icon orange">
-            ⏱
+            <Icon name="clock" />
           </div>
 
           <div className="benefit-copy">
@@ -98,7 +99,7 @@ export default function OnboardingIntro() {
         className="onboarding-main-btn"
         onClick={() => navigate("/onboarding/learning-style")}
       >
-        Let's do it <span>→</span>
+        Let's do it <Icon name="arrowRight" />
       </button>
 
       <button

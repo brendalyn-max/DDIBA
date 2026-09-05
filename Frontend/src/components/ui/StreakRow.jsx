@@ -1,3 +1,5 @@
+import Icon from "./Icon";
+
 export default function StreakRow({ activeDays = 4 }) {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
   return (
@@ -6,7 +8,7 @@ export default function StreakRow({ activeDays = 4 }) {
         <div key={`${day}-${i}`} className="streak-day">
           <span>{day}</span>
           <div className={`streak-dot ${i < activeDays ? "active" : ""}`}>
-            {i < activeDays ? "🔥" : i + 1}
+            {i < activeDays ? <Icon name="flame" /> : i + 1}
           </div>
         </div>
       ))}

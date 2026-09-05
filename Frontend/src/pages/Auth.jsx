@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -9,12 +10,12 @@ export default function Auth() {
     <main className="auth-page">
 
       <section className="adaptive-banner">
-        <div className="adaptive-icon">🎒</div>
+        <div className="adaptive-icon"><Icon name="backpack" /></div>
 
         <div className="adaptive-content">
           <div className="adaptive-topline">
             <span className="status-dot"></span>
-            <span className="adaptive-pill">❓ Adaptive Pace</span>
+            <span className="adaptive-pill"><Icon name="help" /> Adaptive Pace</span>
           </div>
 
           <p>
@@ -38,7 +39,7 @@ export default function Auth() {
           className="auth-main-btn"
           onClick={() => setShowEmailModal(true)}
         >
-          ✉
+          <Icon name="mail" />
           <span>Continue with Email</span>
         </button>
 
@@ -49,17 +50,32 @@ export default function Auth() {
         </div>
 
         <button className="social-login-btn">
-          <span className="social-icon google">G</span>
+          <img
+            className="social-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+            alt=""
+            aria-hidden="true"
+          />
           Continue with Google
         </button>
 
         <button className="social-login-btn">
-          <span className="social-icon microsoft">▦</span>
+          <img
+            className="social-icon"
+            src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg"
+            alt=""
+            aria-hidden="true"
+          />
           Continue with Microsoft
         </button>
 
         <button className="social-login-btn">
-          <span className="social-icon apple">●</span>
+          <img
+            className="social-icon"
+            src="https://cdn.simpleicons.org/apple/182238"
+            alt=""
+            aria-hidden="true"
+          />
           Continue with Apple
         </button>
 
@@ -68,7 +84,7 @@ export default function Auth() {
       <section className="privacy-card">
 
         <div className="privacy-icon">
-          ✓
+          <Icon name="shield" />
         </div>
 
         <div>
@@ -90,7 +106,7 @@ export default function Auth() {
       <section className="community-card">
 
         <div className="community-sun">
-          ☀
+          <Icon name="sun" />
         </div>
 
         <div className="community-copy">

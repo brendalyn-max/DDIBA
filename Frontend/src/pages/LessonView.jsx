@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function LessonView() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function LessonView() {
           onClick={() => navigate("/upload")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="lesson-brand">
@@ -22,22 +23,22 @@ export default function LessonView() {
         </div>
 
         <div className="lesson-header-actions">
-          <button aria-label="Read aloud">🔊</button>
+          <button aria-label="Read aloud"><Icon name="volume" /></button>
           <button aria-label="Bookmark lesson">🔖</button>
         </div>
       </header>
 
       <section className="lesson-meta-row">
         <span className="lesson-subject-pill">
-          🌱 Biology • Cell Energy
+          <Icon name="leaf" /> Biology • Cell Energy
         </span>
       </section>
 
       <section className="lesson-title-section">
-        <h1>🌱 Photosynthesis</h1>
+        <h1><Icon name="leaf" /> Photosynthesis</h1>
 
         <div className="lesson-calibration-pill">
-          ☷ Calibrated to: Short explanations • Real-world examples
+          <Icon name="list" /> Calibrated to: Short explanations • Real-world examples
         </div>
       </section>
 
@@ -50,14 +51,14 @@ export default function LessonView() {
           </div>
 
           <span className="active-lens-pill">
-            ● Active Lens
+            <Icon name="sparkle" /> Active Lens
           </span>
         </div>
 
         <div className="concept-visual-row">
 
           <div className="concept-visual-item">
-            <div className="concept-icon yellow">☀</div>
+            <div className="concept-icon yellow"><Icon name="sun" /></div>
 
             <strong>Sunlight</strong>
 
@@ -67,17 +68,17 @@ export default function LessonView() {
           <span className="concept-plus">+</span>
 
           <div className="concept-visual-item">
-            <div className="concept-icon blue">💧</div>
+            <div className="concept-icon blue"><Icon name="spacing" /></div>
 
             <strong>H₂O & CO₂</strong>
 
             <small>Ingredients</small>
           </div>
 
-          <span className="concept-arrow">→</span>
+          <span className="concept-arrow"><Icon name="arrowRight" /></span>
 
           <div className="concept-visual-item">
-            <div className="concept-icon orange">🍞</div>
+            <div className="concept-icon orange"><Icon name="lightbulb" /></div>
 
             <strong>Glucose</strong>
 
@@ -91,7 +92,7 @@ export default function LessonView() {
       <section className="lesson-key-card">
 
         <div className="lesson-card-label">
-          ✨ Key Idea in 1 Sentence
+          <Icon name="sparkle" /> Key Idea in 1 Sentence
         </div>
 
         <p>
@@ -107,7 +108,7 @@ export default function LessonView() {
         <div className="lesson-analogy-heading">
 
           <span>
-            💡 The Analogy
+            <Icon name="lightbulb" /> The Analogy
           </span>
 
           <span className="mental-model-pill">
@@ -128,7 +129,7 @@ export default function LessonView() {
       <section className="lesson-breakdown-card">
 
         <div className="lesson-breakdown-title">
-          <span className="breakdown-icon">☷</span>
+          <span className="breakdown-icon"><Icon name="list" /></span>
 
           <h3>Step-by-step breakdown</h3>
         </div>
@@ -196,7 +197,7 @@ export default function LessonView() {
         <button
           onClick={() => navigate("/practice")}
         >
-          Practice →
+          Practice <Icon name="arrowRight" />
         </button>
 
       </section>

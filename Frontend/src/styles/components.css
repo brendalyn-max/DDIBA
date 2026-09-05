@@ -460,6 +460,7 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
+
 /* =========================================
    AUTH / CREATE ACCOUNT SCREEN
    ========================================= */
@@ -693,22 +694,10 @@
 }
 
 .social-icon {
-  min-width: 23px;
-
-  font-weight: 900;
-  font-size: 18px;
-}
-
-.google {
-  color: #4285f4;
-}
-
-.microsoft {
-  color: #2a9d45;
-}
-
-.apple {
-  color: #182238;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
 }
 
 

@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 const learningOptions = [
   {
     id: "short",
-    icon: "📝",
+    icon: "pencil",
     title: "Short explanations",
     description: "Bite-sized summaries without jargon",
   },
   {
     id: "steps",
-    icon: "🪜",
+    icon: "list",
     title: "Step-by-step",
     description: "Sequential, bite-sized stages",
   },
   {
     id: "examples",
-    icon: "💡",
+    icon: "lightbulb",
     title: "Examples",
     description: "Real-world analogies and stories",
   },
   {
     id: "listening",
-    icon: "🔊",
+    icon: "volume",
     title: "Listening",
     description: "Audio explanations and voice narration",
   },
@@ -54,7 +55,7 @@ export default function LearningStyle() {
           onClick={() => navigate("/onboarding")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
@@ -71,7 +72,7 @@ export default function LearningStyle() {
           <span>STEP 1 OF 4</span>
 
           <span className="personalisation-label">
-            🌱 Personalization
+            <Icon name="leaf" /> Personalization
           </span>
         </div>
 
@@ -92,7 +93,7 @@ export default function LearningStyle() {
       <div className="multi-select-info">
 
         <span>
-          💡 Multi-select enabled • Tailors your tutor voice
+          <Icon name="lightbulb" /> Multi-select enabled • Tailors your tutor voice
         </span>
 
         <strong>
@@ -120,7 +121,7 @@ export default function LearningStyle() {
               <div className="learning-option-top">
 
                 <div className="learning-option-icon">
-                  {option.icon}
+                  <Icon name={option.icon} />
                 </div>
 
                 <div
@@ -149,7 +150,7 @@ export default function LearningStyle() {
         className="learning-next-btn"
         onClick={() => navigate("/onboarding/explanations")}
       >
-        Next <span>→</span>
+        Next <Icon name="arrowRight" />
       </button>
 
     </main>
