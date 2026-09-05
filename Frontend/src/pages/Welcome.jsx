@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Welcome() {
   const navigate = useNavigate();
 
-  return (
-    <main className="welcome-page">
+  const brandPanel = (
+    <section className="welcome-brand-panel">
 
       {/* Top */}
       <header className="welcome-header">
@@ -52,41 +53,47 @@ export default function Welcome() {
 
       </section>
 
-      {/* Main text */}
-      <section className="welcome-text">
+      <span className="stress-pill">
+        <Icon name="sparkle" /> Stress-Free Study
+      </span>
 
-        <span className="stress-pill">
-          <Icon name="sparkle" /> Stress-Free Study
-        </span>
+    </section>
+  );
 
-        <h1>Learn your way.</h1>
+  const contentPanel = (
+    <section className="welcome-content-panel">
 
-        <p>
-          An AI learning companion that adapts
-          to how you learn—without judgment or
-          rush.
-        </p>
+      <div className="welcome-content-main">
+        {/* Main text */}
+        <section className="welcome-text">
+          <h1>Learn your way.</h1>
 
-      </section>
+          <p>
+            An AI learning companion that adapts
+            to how you learn—without judgment or
+            rush.
+          </p>
+        </section>
 
-      {/* Buttons */}
-      <div className="welcome-actions">
+        {/* Buttons */}
+        <div className="welcome-actions">
 
-        <button
-          className="welcome-btn primary"
-          onClick={() => navigate("/auth")}
-        >
-          Get Started
-          <Icon name="arrowRight" />
-        </button>
+          <button
+            className="welcome-btn primary"
+            onClick={() => navigate("/auth")}
+          >
+            Get Started
+            <Icon name="arrowRight" />
+          </button>
 
-        <button
-          className="welcome-btn secondary"
-          onClick={() => navigate("/auth")}
-        >
-          Log In
-        </button>
+          <button
+            className="welcome-btn secondary"
+            onClick={() => navigate("/auth")}
+          >
+            Log In
+          </button>
 
+        </div>
       </div>
 
       {/* Bottom reassurance */}
@@ -98,6 +105,15 @@ export default function Welcome() {
         </p>
       </div>
 
-    </main>
+    </section>
+  );
+
+  return (
+    <ResponsiveLayout
+      className="welcome-page"
+      mode="split"
+      left={brandPanel}
+      right={contentPanel}
+    />
   );
 }

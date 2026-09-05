@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Auth() {
   const navigate = useNavigate();
   const [showEmailModal, setShowEmailModal] = useState(false);
 
   return (
-    <main className="auth-page">
+    <ResponsiveLayout className="auth-page">
 
       <section className="adaptive-banner">
         <div className="adaptive-icon"><Icon name="backpack" /></div>
@@ -189,6 +190,6 @@ export default function Auth() {
         </div>
       )}
 
-    </main>
+    </ResponsiveLayout>
   );
 }

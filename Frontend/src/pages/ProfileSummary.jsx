@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function ProfileSummary() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function ProfileSummary() {
   ];
 
   return (
-    <main className="profile-summary-page">
+    <ResponsiveLayout className="profile-summary-page">
 
       <header className="onboarding-topbar">
 
@@ -137,6 +138,6 @@ export default function ProfileSummary() {
         Start Learning <Icon name="arrowRight" />
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

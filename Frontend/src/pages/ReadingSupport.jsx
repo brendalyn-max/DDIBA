@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 const supportOptions = [
   {
@@ -58,7 +59,7 @@ export default function ReadingSupport() {
   };
 
   return (
-    <main className="reading-support-page">
+    <ResponsiveLayout className="reading-support-page">
 
       <header className="onboarding-topbar">
 
@@ -177,6 +178,6 @@ export default function ReadingSupport() {
         Continue <Icon name="arrowRight" />
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

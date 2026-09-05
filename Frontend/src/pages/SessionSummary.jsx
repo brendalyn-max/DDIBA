@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function SessionSummary() {
   const navigate = useNavigate();
 
   return (
-    <main className="session-summary-page">
+    <ResponsiveLayout className="session-summary-page">
 
       <header className="session-summary-header">
         <button
@@ -160,6 +161,6 @@ export default function SessionSummary() {
 
       </div>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

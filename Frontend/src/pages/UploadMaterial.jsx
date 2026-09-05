@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function UploadMaterial() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function UploadMaterial() {
   }, [text]);
 
   return (
-    <main className="upload-material-page">
+    <ResponsiveLayout className="upload-material-page">
 
       <header className="upload-main-header">
 
@@ -321,6 +322,6 @@ export default function UploadMaterial() {
 
       </nav>
 
-    </main>
+    </ResponsiveLayout>
   );
 }
