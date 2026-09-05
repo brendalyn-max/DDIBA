@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function Dashboard() {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
 
   return (
-    <main className="dashboard-page">
+    <ResponsiveLayout className="dashboard-page">
       <header className="dashboard-header">
         <div className="dashboard-brand">
           <div className="dashboard-logo">⌣</div>
@@ -206,6 +207,6 @@ export default function Dashboard() {
           <small>Progress</small>
         </button>
       </nav>
-    </main>
+    </ResponsiveLayout>
   );
 }

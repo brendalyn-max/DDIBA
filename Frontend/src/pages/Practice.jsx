@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 const answers = [
   "Carbon monoxide",
@@ -17,7 +18,7 @@ export default function Practice() {
   const correctAnswer = 1;
 
   return (
-    <main className="practice-page">
+    <ResponsiveLayout className="practice-page">
 
       <header className="practice-header">
 
@@ -220,6 +221,6 @@ export default function Practice() {
 
       </nav>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

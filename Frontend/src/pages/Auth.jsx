@@ -5,7 +5,7 @@ export default function Auth() {
   const navigate = useNavigate();
 
   return (
-    <main className="auth-page">
+    <ResponsiveLayout className="auth-page">
 
       <header className="auth-brand">
         <div className="auth-brand-logo">⌣</div>
@@ -89,6 +89,6 @@ export default function Auth() {
 
       </div>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

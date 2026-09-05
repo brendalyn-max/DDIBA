@@ -1,12 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function OnboardingIntro() {
   const navigate = useNavigate();
 
   return (
-    <main className="onboarding-intro-page">
+    <ResponsiveLayout className="onboarding-intro-page" mode="wide">
 
       <header className="onboarding-topbar">
         <button
@@ -109,6 +110,6 @@ export default function OnboardingIntro() {
         Skip for now
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

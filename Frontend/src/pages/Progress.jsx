@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Progress() {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function Progress() {
   const days = ["M", "T", "W", "T", "F", "S", "S"];
 
   return (
-    <main className="progress-page">
+    <ResponsiveLayout className="progress-page">
 
       <header className="progress-header">
 
@@ -232,6 +233,6 @@ export default function Progress() {
 
       </nav>
 
-    </main>
+    </ResponsiveLayout>
   );
 }
