@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoLockup from "../components/Logo/LogoLockup";
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -31,16 +32,8 @@ export default function Welcome() {
           <Icon name="sparkle" />
         </span>
 
-        <div className="welcome-hero-circle">
-          <div className="ddiba-center-logo">
-            <div className="ddiba-logo-icon">
-              <span className="book-shape">⌣</span>
-            </div>
-
-            <span className="ddiba-center-name">
-              Ddiba
-            </span>
-          </div>
+          <div className="welcome-hero-circle">
+            <LogoLockup markSize={72} className="ddiba-logo-lockup--hero" />
         </div>
 
         <span className="floating-chip chip-mindmaps">

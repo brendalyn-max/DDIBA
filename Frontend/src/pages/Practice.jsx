@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoMark from "../components/Logo/LogoMark";
 
 const answers = [
   "Carbon monoxide",
@@ -23,7 +24,7 @@ export default function Practice() {
       <header className="practice-header">
 
         <div className="practice-brand">
-          <div className="practice-logo">⌣</div>
+          <LogoMark size={39} />
 
           <div>
             <small>Ddiba</small>

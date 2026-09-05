@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoMark from "../components/Logo/LogoMark";
 
 export default function UploadMaterial() {
   const navigate = useNavigate();
@@ -25,9 +26,7 @@ export default function UploadMaterial() {
 
         <div className="upload-brand">
 
-          <div className="upload-logo">
-            ⌣
-          </div>
+          <LogoMark size={39} />
 
           <div className="upload-brand-copy">
             <small>Ddiba</small>
