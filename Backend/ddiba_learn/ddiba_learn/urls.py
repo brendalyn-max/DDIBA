@@ -20,6 +20,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api.views import test_api
+from api.views import submit_onboarding
 
 from api.views import (
     adapt_lesson,
@@ -54,4 +55,6 @@ urlpatterns = [
         learner_profile,
         name="learner_profile",
     ),
+
+    path("api/onboarding/", submit_onboarding, name="submit_onboarding"),
 ]
