@@ -595,6 +595,21 @@
   letter-spacing: 0;
 }
 
+.auth-title p {
+  margin: 7px 0 0;
+  color: #727386;
+  font-size: 13px;
+}
+
+.auth-title .auth-eyebrow {
+  margin: 0 0 8px;
+  color: #5032be;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 
 /* =========================
    LOGIN ACTIONS
@@ -638,6 +653,34 @@
   box-shadow: 0 0 0 3px rgba(118, 92, 224, 0.13);
 }
 
+.auth-field {
+  position: relative;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  border: 0;
+  padding: 2px 4px;
+  background: transparent;
+  color: #5032be;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.auth-field input[type="password"],
+.auth-field input[type="text"] {
+  padding-right: 58px;
+}
+
+.auth-error {
+  margin: -2px 2px 0;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
 .auth-login-btn {
   min-height: 44px;
   border: none;
@@ -674,6 +717,11 @@
 
   box-shadow:
     0 5px 12px rgba(76, 50, 189, 0.2);
+}
+
+.auth-main-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .auth-divider {
