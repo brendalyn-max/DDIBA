@@ -1,21 +1,140 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Icon from "../components/ui/Icon";
+
+const API_BASE_URL = "http://127.0.0.1:8000";
 
 export default function UploadMaterial() {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("type");
+
   const [text, setText] = useState(
-    "Photosynthesis occurs inside chloroplasts where chlorophyll pigments trap radiant solar photons. This light energy excites electrons within thylakoid membrane protein complexes, initiating photolysis to break water molecules into oxygen gas, protons, and mobile electrons."
+    "Photosynthesis occurs inside chloroplasts where chlorophyll pigments absorb light energy."
   );
 
   const [subject, setSubject] = useState("Biology");
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   const wordCount = useMemo(() => {
     if (!text.trim()) return 0;
+
     return text.trim().split(/\s+/).length;
   }, [text]);
+
+  const handleAdaptLesson = async () => {
+    if (!text.trim()) {
+      setError("Please enter some learning material first.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      /*
+       * First fetch the learner's saved preferences.
+       */
+      const profileResponse = await fetch(
+        `${API_BASE_URL}/api/profile/`
+      );
+
+      if (!profileResponse.ok) {
+        throw new Error(
+          "Could not load your learning preferences."
+        );
+      }
+
+      const profile = await profileResponse.json();
+
+      /*
+       * Send lesson text + preferences to Django.
+       */
+      const response = await fetch(
+        `${API_BASE_URL}/api/adapt-lesson/`,
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            text: text,
+
+            preferences: {
+              short_explanations:
+                profile.short_explanations,
+
+              step_by_step:
+                profile.step_by_step,
+
+              examples:
+                profile.examples,
+
+              larger_text:
+                profile.larger_text,
+
+              more_spacing:
+                profile.more_spacing,
+
+              shorter_paragraphs:
+                profile.shorter_paragraphs,
+
+              highlight_words:
+                profile.highlight_words,
+
+              read_aloud:
+                profile.read_aloud,
+
+              pace:
+                profile.pace,
+            },
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.detail ||
+            "Ddiba could not adapt this lesson."
+        );
+      }
+
+      /*
+       * Send the real AI result to LessonView.
+       */
+      navigate("/lesson", {
+        state: {
+          originalText: text,
+
+          simplifiedText:
+            data.simplified_text,
+
+          keyPoints:
+            data.key_points,
+
+          subject: subject,
+
+          preferences: profile,
+        },
+      });
+
+    } catch (err) {
+      console.error(err);
+
+      setError(
+        err.message ||
+          "Something went wrong while adapting your lesson."
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="upload-material-page">
@@ -38,7 +157,7 @@ export default function UploadMaterial() {
         <div className="upload-header-actions">
 
           <span className="upload-streak-pill">
-            <Icon name="flame" /> 5
+            🔥 5
           </span>
 
           <div className="upload-avatar">
@@ -53,10 +172,12 @@ export default function UploadMaterial() {
 
         <button
           className="upload-back-btn"
-          onClick={() => navigate("/dashboard")}
+          onClick={() =>
+            navigate("/dashboard")
+          }
           aria-label="Back"
         >
-          <Icon name="arrowLeft" />
+          ←
         </button>
 
         <h2>New Learning Topic</h2>
@@ -65,13 +186,13 @@ export default function UploadMaterial() {
           className="upload-menu-btn"
           aria-label="More options"
         >
-          <Icon name="list" />
+          ☷
         </button>
 
       </section>
 
       <span className="upload-reader-label">
-        <Icon name="sparkle" /> DDIBA INTELLIGENT READER
+        ✨ DDIBA INTELLIGENT READER
       </span>
 
       <section className="upload-heading">
@@ -83,8 +204,8 @@ export default function UploadMaterial() {
         </h1>
 
         <p>
-          Drop in study notes, lecture slides, textbook
-          excerpts, or questions.
+          Drop in study notes, lecture slides,
+          textbook excerpts, or questions.
         </p>
 
       </section>
@@ -92,14 +213,16 @@ export default function UploadMaterial() {
       <section className="free-tier-card">
 
         <span>
-          <Icon name="sparkle" /> Free tier: 3 topics remaining
+          ✨ Free tier: 3 topics remaining
         </span>
 
         <button
           type="button"
-          onClick={() => navigate("/subscription")}
+          onClick={() =>
+            navigate("/subscription")
+          }
         >
-          View Plans <Icon name="sparkle" />
+          View Plans ✨
         </button>
 
       </section>
@@ -108,44 +231,63 @@ export default function UploadMaterial() {
 
         <button
           type="button"
-          className={activeTab === "type" ? "active" : ""}
-          onClick={() => setActiveTab("type")}
+          className={
+            activeTab === "type"
+              ? "active"
+              : ""
+          }
+          onClick={() =>
+            setActiveTab("type")
+          }
         >
-          <Icon name="type" /> Type / Paste
+          ≋ Type / Paste
         </button>
 
         <button
           type="button"
-          className={activeTab === "voice" ? "active" : ""}
-          onClick={() => setActiveTab("voice")}
+          className={
+            activeTab === "voice"
+              ? "active"
+              : ""
+          }
+          onClick={() =>
+            setActiveTab("voice")
+          }
         >
-          <Icon name="mic" /> Voice Dictate
+          🎙 Voice Dictate
         </button>
 
         <button
           type="button"
-          className={activeTab === "file" ? "active" : ""}
-          onClick={() => setActiveTab("file")}
+          className={
+            activeTab === "file"
+              ? "active"
+              : ""
+          }
+          onClick={() =>
+            setActiveTab("file")
+          }
         >
-          <Icon name="cloudUpload" /> Upload File
+          ☁ Upload File
         </button>
 
       </section>
 
       {activeTab === "type" && (
+
         <section className="upload-text-card">
 
           <div className="upload-text-card-top">
 
             <strong>
-              <Icon name="type" /> Raw text or question prompt
+              ≋ Raw text or question prompt
             </strong>
 
             <button
               type="button"
               onClick={() => setText("")}
             >
-              <Icon name="refresh" /> Clear
+              ↻ Clear
             </button>
 
           </div>
@@ -161,13 +303,13 @@ export default function UploadMaterial() {
           <div className="upload-text-card-bottom">
 
             <span className="word-count-pill">
-              <Icon name="check" /> {wordCount} words entered
+              ◉ {wordCount} words entered
             </span>
 
             <div className="upload-text-actions">
 
               <button type="button">
-                <Icon name="mic" /> Dictate
+                🎙 Dictate
               </button>
 
               <button
@@ -180,8 +322,11 @@ export default function UploadMaterial() {
                     if (clipboardText) {
                       setText(clipboardText);
                     }
+
                   } catch {
-                    // Clipboard permission may be unavailable.
+                    setError(
+                      "Clipboard permission was not available."
+                    );
                   }
                 }}
               >
@@ -193,20 +338,22 @@ export default function UploadMaterial() {
           </div>
 
         </section>
+
       )}
 
       {activeTab === "voice" && (
+
         <section className="upload-alternative-card">
 
           <div className="alternative-icon">
-            <Icon name="mic" />
+            🎙
           </div>
 
           <h3>Voice Dictation</h3>
 
           <p>
-            Speak naturally and Ddiba will turn your
-            thoughts into study material.
+            Speak naturally and Ddiba will turn
+            your thoughts into study material.
           </p>
 
           <button type="button">
@@ -214,20 +361,25 @@ export default function UploadMaterial() {
           </button>
 
         </section>
+
       )}
 
       {activeTab === "file" && (
+
         <section className="upload-alternative-card">
 
           <div className="alternative-icon">
-            <Icon name="cloudUpload" />
+            ☁
           </div>
 
-          <h3>Upload Learning Material</h3>
+          <h3>
+            Upload Learning Material
+          </h3>
 
           <p>
-            Add notes, slides, or documents and Ddiba
-            will prepare them for adaptive learning.
+            Add notes, slides, or documents
+            and Ddiba will prepare them for
+            adaptive learning.
           </p>
 
           <label className="upload-file-label">
@@ -242,6 +394,7 @@ export default function UploadMaterial() {
           </label>
 
         </section>
+
       )}
 
       <section className="subject-framing">
@@ -254,24 +407,42 @@ export default function UploadMaterial() {
 
           <button
             type="button"
-            className={subject === "Biology" ? "active" : ""}
-            onClick={() => setSubject("Biology")}
+            className={
+              subject === "Biology"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              setSubject("Biology")
+            }
           >
-            <Icon name="dna" /> Biology
+            🧬 Biology
           </button>
 
           <button
             type="button"
-            className={subject === "History" ? "active" : ""}
-            onClick={() => setSubject("History")}
+            className={
+              subject === "History"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              setSubject("History")
+            }
           >
-            <Icon name="scroll" /> History
+            📜 History
           </button>
 
           <button
             type="button"
-            className={subject === "Math" ? "active" : ""}
-            onClick={() => setSubject("Math")}
+            className={
+              subject === "Math"
+                ? "active"
+                : ""
+            }
+            onClick={() =>
+              setSubject("Math")
+            }
           >
             Σ Math
           </button>
@@ -280,42 +451,79 @@ export default function UploadMaterial() {
 
       </section>
 
+      {error && (
+        <div
+          style={{
+            marginTop: "14px",
+            padding: "12px",
+            borderRadius: "14px",
+            background: "#fff0f2",
+            color: "#a2394a",
+            fontSize: "12px",
+          }}
+        >
+          {error}
+        </div>
+      )}
+
       <button
         className="make-easier-btn"
-        onClick={() => navigate("/lesson")}
-        disabled={!text.trim() && activeTab === "type"}
+        onClick={handleAdaptLesson}
+        disabled={
+          loading ||
+          (!text.trim() &&
+            activeTab === "type")
+        }
       >
-        <Icon name="sparkle" /> Make it easier <Icon name="arrowRight" />
+
+        {loading
+          ? "✨ Ddiba is adapting your lesson..."
+          : (
+            <>
+              ✨ Make it easier
+              <span>→</span>
+            </>
+          )
+        }
+
       </button>
 
       <nav className="upload-bottom-nav">
 
         <button
-          onClick={() => navigate("/dashboard")}
+          onClick={() =>
+            navigate("/dashboard")
+          }
         >
-          <span><Icon name="book" /></span>
+          <span>◈</span>
           <small>Learn</small>
         </button>
 
         <button
-          onClick={() => navigate("/practice")}
+          onClick={() =>
+            navigate("/practice")
+          }
         >
-          <span><Icon name="play" /></span>
+          <span>◉</span>
           <small>Practice</small>
         </button>
 
         <button
           className="active"
-          onClick={() => navigate("/upload")}
+          onClick={() =>
+            navigate("/upload")
+          }
         >
-          <span><Icon name="file" /></span>
+          <span>✚</span>
           <small>Notes</small>
         </button>
 
         <button
-          onClick={() => navigate("/progress")}
+          onClick={() =>
+            navigate("/progress")
+          }
         >
-          <span><Icon name="chart" /></span>
+          <span>⌁</span>
           <small>Progress</small>
         </button>
 
