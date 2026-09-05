@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 
 # Create your views here.
 from rest_framework.decorators import api_view
@@ -14,7 +15,12 @@ from .serializers import (
     LearnerProfileSerializer,
     PracticeQuestionsSerializer,
 )
-
+from .llm_service import (
+    adapt_lesson_with_ai,
+    generate_practice_questions_with_ai,
+    evaluate_answer_with_ai,
+    LLMServiceError,
+)
 
 @api_view(["POST"])
 def adapt_lesson(request):
@@ -24,24 +30,22 @@ def adapt_lesson(request):
     text = serializer.validated_data["text"]
     preferences = serializer.validated_data.get("preferences", {})
 
-    simplified_text = (
-        "This is a temporary adapted version of the lesson. "
-        "Later, the LLM will simplify the vocabulary, shorten sentences, "
-        "break content into smaller chunks, and explain difficult terms."
-    )
+    try:
+        result = adapt_lesson_with_ai(
+            text=text,
+            preferences=preferences,
+        )
 
-    key_points = [
-        "The lesson text was received successfully.",
-        "The learner preferences were received successfully.",
-        f"Original text length: {len(text)} characters.",
-        f"Preferences received: {preferences}",
-    ]
+    except LLMServiceError as exc:
+        return Response(
+            {
+                "detail": str(exc),
+            },
+            status=status.HTTP_502_BAD_GATEWAY,
+        )
 
     return Response(
-        {
-            "simplified_text": simplified_text,
-            "key_points": key_points,
-        },
+        result,
         status=status.HTTP_200_OK,
     )
 
@@ -53,34 +57,23 @@ def practice_questions(request):
 
     adapted_text = serializer.validated_data["adapted_text"]
 
-    questions = [
-        {
-            "question": "What is the main idea of this lesson?",
-            "type": "free_text",
-            "reference_answer": "The learner should explain the main idea in their own words.",
-        },
-        {
-            "question": "Which statement best matches the lesson?",
-            "type": "multiple_choice",
-            "options": [
-                "Option A",
-                "Option B",
-                "Option C",
-                "Option D",
-            ],
-            "reference_answer": "Option B",
-        },
-    ]
+    try:
+        result = generate_practice_questions_with_ai(
+            adapted_text=adapted_text,
+        )
+
+    except LLMServiceError as exc:
+        return Response(
+            {
+                "detail": str(exc),
+            },
+            status=status.HTTP_502_BAD_GATEWAY,
+        )
 
     return Response(
-        {
-            "source_length": len(adapted_text),
-            "questions": questions,
-        },
+        result,
         status=status.HTTP_200_OK,
     )
-
-
 @api_view(["POST"])
 def evaluate_answer(request):
     serializer = EvaluateAnswerSerializer(data=request.data)
@@ -90,44 +83,50 @@ def evaluate_answer(request):
     student_answer = serializer.validated_data["student_answer"]
     reference_answer = serializer.validated_data["reference_answer"]
 
-    student_normalized = student_answer.strip().lower()
-    reference_normalized = reference_answer.strip().lower()
+    try:
+        result = evaluate_answer_with_ai(
+            question=question,
+            student_answer=student_answer,
+            reference_answer=reference_answer,
+        )
 
-    correct = student_normalized == reference_normalized
-
-    if correct:
-        feedback = "Good work. Your answer matches the expected answer."
-    else:
-        feedback = (
-            "Your answer is not an exact match yet. "
-            "Later, the LLM will judge answers semantically and give more helpful feedback."
+    except LLMServiceError as exc:
+        return Response(
+            {
+                "detail": str(exc),
+            },
+            status=status.HTTP_502_BAD_GATEWAY,
         )
 
     return Response(
         {
             "question": question,
-            "correct": correct,
-            "feedback": feedback,
+            "correct": result["correct"],
+            "feedback": result["feedback"],
         },
         status=status.HTTP_200_OK,
     )
 
-
 @api_view(["GET", "PATCH"])
 def learner_profile(request):
-    if not request.user.is_authenticated:
-        return Response(
-            {
-                "detail": "Authentication is required for learner profile access."
-            },
-            status=status.HTTP_401_UNAUTHORIZED,
-        )
+    demo_user, _ = User.objects.get_or_create(
+        username="demo_learner",
+        defaults={
+            "email": "demo@ddiba.local",
+        },
+    )
 
-    profile, _ = LearnerProfile.objects.get_or_create(user=request.user)
+    profile, _ = LearnerProfile.objects.get_or_create(
+        user=demo_user
+    )
 
     if request.method == "GET":
         serializer = LearnerProfileSerializer(profile)
-        return Response(serializer.data)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
 
     serializer = LearnerProfileSerializer(
         profile,
@@ -138,8 +137,10 @@ def learner_profile(request):
     serializer.is_valid(raise_exception=True)
     serializer.save()
 
-    return Response(serializer.data)
-
+    return Response(
+        serializer.data,
+        status=status.HTTP_200_OK,
+    )
 
 @api_view(["GET"])
 def test_api(request):
