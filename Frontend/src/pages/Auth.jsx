@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Auth() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [mode, setMode] = useState("signup");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,7 +34,8 @@ export default function Auth() {
       }
       localStorage.setItem("ddiba_token", data.token);
       localStorage.setItem("ddiba_username", data.username);
-      navigate(isSignup ? "/onboarding" : "/dashboard");
+      const destination = isSignup ? "/onboarding" : location.state?.from || "/dashboard";
+      navigate(destination, { replace: true });
     } catch (submitError) {
       setError(submitError.message.includes("Failed to fetch") ? "The learning service is offline. Start the backend and try again." : submitError.message);
     } finally {
