@@ -101,56 +101,6 @@
 }
 
 
-/* Ddiba logo inside circle */
-
-.ddiba-center-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-}
-
-.ddiba-logo-icon {
-  width: 72px;
-  height: 72px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 22px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #7658ff,
-      #5635e5
-    );
-
-  box-shadow:
-    0 7px 16px rgba(79, 51, 195, 0.25);
-}
-
-.book-shape {
-  color: #ffffff;
-
-  font-size: 40px;
-  font-weight: 900;
-
-  line-height: 1;
-}
-
-.ddiba-center-name {
-  color: #5237c8;
-
-  font-size: 30px;
-  font-weight: 850;
-
-  letter-spacing: -0.8px;
-}
-
-
 /* =========================
    FLOATING CHIPS
    ========================= */
@@ -428,19 +378,6 @@
   .welcome-hero-circle {
     width: 165px;
     height: 165px;
-  }
-
-  .ddiba-logo-icon {
-    width: 62px;
-    height: 62px;
-  }
-
-  .book-shape {
-    font-size: 34px;
-  }
-
-  .ddiba-center-name {
-    font-size: 26px;
   }
 
   .floating-chip {

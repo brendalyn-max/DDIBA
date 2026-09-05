@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoMark from "../components/Logo/LogoMark";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function Dashboard() {
     <ResponsiveLayout className="dashboard-page">
       <header className="dashboard-header">
         <div className="dashboard-brand">
-          <div className="dashboard-logo">⌣</div>
+          <LogoMark size={39} />
 
           <div className="dashboard-brand-copy">
             <small>Ddiba</small>

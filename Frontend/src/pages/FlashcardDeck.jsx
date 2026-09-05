@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoMark from "../components/Logo/LogoMark";
 
 export default function FlashcardDeck() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function FlashcardDeck() {
         </button>
 
         <div className="flashcard-header-title">
-          <div className="flashcard-logo">⌣</div>
+          <LogoMark size={31} />
           <span>Interactive Flashcards</span>
         </div>
 
