@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function Auth() {
   const navigate = useNavigate();
