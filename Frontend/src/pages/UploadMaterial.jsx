@@ -4,20 +4,113 @@ import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
 
+const API_BASE_URL = "http://127.0.0.1:8000";
+
 export default function UploadMaterial() {
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("type");
+
   const [text, setText] = useState(
     "Photosynthesis occurs inside chloroplasts where chlorophyll pigments trap radiant solar photons. This light energy excites electrons within thylakoid membrane protein complexes, initiating photolysis to break water molecules into oxygen gas, protons, and mobile electrons."
   );
 
   const [subject, setSubject] = useState("Biology");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const wordCount = useMemo(() => {
     if (!text.trim()) return 0;
     return text.trim().split(/\s+/).length;
   }, [text]);
+
+  const handleAdaptLesson = async () => {
+    if (!text.trim()) {
+      setError("Please enter some learning material first.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const profileResponse = await fetch(
+        `${API_BASE_URL}/api/profile/`
+      );
+
+      const profileData = await profileResponse.json();
+
+      if (!profileResponse.ok) {
+        throw new Error(
+          profileData.detail ||
+            "Could not load your learning preferences."
+        );
+      }
+
+      const response = await fetch(
+        `${API_BASE_URL}/api/adapt-lesson/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text,
+            preferences: {
+              short_explanations:
+                profileData.short_explanations,
+              step_by_step:
+                profileData.step_by_step,
+              examples:
+                profileData.examples,
+              larger_text:
+                profileData.larger_text,
+              more_spacing:
+                profileData.more_spacing,
+              shorter_paragraphs:
+                profileData.shorter_paragraphs,
+              highlight_words:
+                profileData.highlight_words,
+              read_aloud:
+                profileData.read_aloud,
+              pace:
+                profileData.pace,
+            },
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.detail ||
+            "Ddiba could not adapt this lesson."
+        );
+      }
+
+      navigate("/lesson", {
+        state: {
+          originalText: text,
+          simplifiedText: data.simplified_text,
+          keyPoints: data.key_points,
+          subject,
+          preferences: profileData,
+        },
+      });
+
+    } catch (err) {
+      console.error(err);
+
+      setError(
+        err.message ||
+          "Something went wrong while adapting your lesson."
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <ResponsiveLayout className="upload-material-page">
@@ -143,7 +236,10 @@ export default function UploadMaterial() {
 
             <button
               type="button"
-              onClick={() => setText("")}
+              onClick={() => {
+                setText("");
+                setError("");
+              }}
             >
               <Icon name="refresh" /> Clear
             </button>
@@ -179,9 +275,12 @@ export default function UploadMaterial() {
 
                     if (clipboardText) {
                       setText(clipboardText);
+                      setError("");
                     }
                   } catch {
-                    // Clipboard permission may be unavailable.
+                    setError(
+                      "Clipboard permission was not available."
+                    );
                   }
                 }}
               >
@@ -280,12 +379,41 @@ export default function UploadMaterial() {
 
       </section>
 
+      {error && (
+        <div
+          style={{
+            marginTop: "14px",
+            padding: "12px",
+            borderRadius: "14px",
+            background: "#fff0f2",
+            color: "#a2394a",
+            fontSize: "12px",
+          }}
+        >
+          {error}
+        </div>
+      )}
+
       <button
         className="make-easier-btn"
-        onClick={() => navigate("/lesson")}
-        disabled={!text.trim() && activeTab === "type"}
+        onClick={handleAdaptLesson}
+        disabled={
+          loading ||
+          (!text.trim() && activeTab === "type")
+        }
       >
-        <Icon name="sparkle" /> Make it easier <Icon name="arrowRight" />
+        {loading ? (
+          <>
+            <Icon name="sparkle" />
+            Ddiba is adapting your lesson...
+          </>
+        ) : (
+          <>
+            <Icon name="sparkle" />
+            Make it easier
+            <Icon name="arrowRight" />
+          </>
+        )}
       </button>
 
       <nav className="upload-bottom-nav">
