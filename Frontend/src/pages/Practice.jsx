@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 const answers = [
   "Carbon monoxide",
@@ -31,7 +32,7 @@ export default function Practice() {
 
         <div className="practice-header-actions">
           <span className="practice-streak-pill">
-            🔥 5
+            <Icon name="flame" /> 5
           </span>
 
           <div className="practice-avatar">
@@ -47,7 +48,7 @@ export default function Practice() {
           className="practice-back-btn"
           onClick={() => navigate("/lesson")}
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div>
@@ -56,7 +57,7 @@ export default function Practice() {
         </div>
 
         <div className="practice-topic-icon">
-          🌿
+          <Icon name="leaf" />
         </div>
 
       </section>
@@ -68,7 +69,7 @@ export default function Practice() {
       <section className="practice-question-meta">
 
         <span className="practice-concept-pill">
-          ❓ Concept Check
+          <Icon name="help" /> Concept Check
         </span>
 
         <span>
@@ -86,7 +87,7 @@ export default function Practice() {
 
         <div className="practice-image-card">
           <div className="practice-image-placeholder">
-            🌿
+            <Icon name="leaf" />
           </div>
 
           <span>
@@ -159,8 +160,8 @@ export default function Practice() {
 
             <span>
               {selectedAnswer === correctAnswer
-                ? "🎉 Spot on, Sarah!"
-                : "💡 Good try, Sarah!"}
+                ? <><Icon name="sparkle" /> Spot on, Sarah!</>
+                : <><Icon name="lightbulb" /> Good try, Sarah!</>}
             </span>
 
             <span className="xp-pill">
@@ -183,7 +184,7 @@ export default function Practice() {
         onClick={() => navigate("/progress")}
         disabled={selectedAnswer === null}
       >
-        Finish Session <span>→</span>
+        Finish Session <Icon name="arrowRight" />
       </button>
 
       <nav className="practice-bottom-nav">
@@ -191,7 +192,7 @@ export default function Practice() {
         <button
           onClick={() => navigate("/dashboard")}
         >
-          <span>◈</span>
+          <span><Icon name="book" /></span>
           <small>Learn</small>
         </button>
 
@@ -199,21 +200,21 @@ export default function Practice() {
           className="active"
           onClick={() => navigate("/practice")}
         >
-          <span>◉</span>
+          <span><Icon name="play" /></span>
           <small>Practice</small>
         </button>
 
         <button
           onClick={() => navigate("/upload")}
         >
-          <span>✚</span>
+          <span><Icon name="file" /></span>
           <small>Notes</small>
         </button>
 
         <button
           onClick={() => navigate("/progress")}
         >
-          <span>⌁</span>
+          <span><Icon name="chart" /></span>
           <small>Progress</small>
         </button>
 

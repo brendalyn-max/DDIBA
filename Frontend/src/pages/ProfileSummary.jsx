@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function ProfileSummary() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function ProfileSummary() {
           onClick={() => navigate("/onboarding/reading-support")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
@@ -84,7 +85,7 @@ export default function ProfileSummary() {
 
         <div className="accommodations-heading">
 
-          <h3>☷ Active Accommodations</h3>
+          <h3><Icon name="list" /> Active Accommodations</h3>
 
           <span>6 applied</span>
 
@@ -113,7 +114,7 @@ export default function ProfileSummary() {
       <section className="ddiba-promise-card">
 
         <div className="promise-icon">
-          ?
+          <Icon name="help" />
         </div>
 
         <div className="promise-copy">
@@ -133,7 +134,7 @@ export default function ProfileSummary() {
         className="profile-start-btn"
         onClick={() => navigate("/dashboard")}
       >
-        Start Learning <span>→</span>
+        Start Learning <Icon name="arrowRight" />
       </button>
 
     </main>

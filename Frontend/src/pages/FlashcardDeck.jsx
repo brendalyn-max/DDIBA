@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function FlashcardDeck() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export default function FlashcardDeck() {
           onClick={() => navigate("/progress")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="flashcard-header-title">
@@ -38,7 +39,7 @@ export default function FlashcardDeck() {
 
       <section className="flashcard-deck-heading">
         <span className="flashcard-due-pill">
-          ⏱ Due for quick recall
+          <Icon name="clock" /> Due for quick recall
         </span>
 
         <h1>Photosynthesis & Energy</h1>
@@ -69,7 +70,7 @@ export default function FlashcardDeck() {
       <section className="flashcard-safe-card">
 
         <div className="flashcard-safe-icon">
-          🌿
+          <Icon name="leaf" />
         </div>
 
         <div>
@@ -125,7 +126,7 @@ export default function FlashcardDeck() {
               <span>{topic}</span>
 
               <span className="flashcard-row-arrow">
-                →
+                <Icon name="arrowRight" />
               </span>
             </button>
           ))}
@@ -171,7 +172,7 @@ export default function FlashcardDeck() {
               <span>{topic}</span>
 
               <span className="flashcard-row-arrow">
-                →
+                <Icon name="arrowRight" />
               </span>
             </button>
           ))}
@@ -184,7 +185,7 @@ export default function FlashcardDeck() {
         className="flashcard-start-btn"
         onClick={() => navigate("/session-summary")}
       >
-        Start Flashcards (15 Cards) <span>→</span>
+        Start Flashcards (15 Cards) <Icon name="arrowRight" />
       </button>
 
     </main>

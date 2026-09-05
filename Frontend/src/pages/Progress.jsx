@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function Progress() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ export default function Progress() {
         </div>
 
         <div className="progress-header-actions">
-          <span className="progress-streak-pill">🔥 5</span>
+          <span className="progress-streak-pill"><Icon name="flame" /> 5</span>
           <div className="progress-avatar">S</div>
         </div>
 
@@ -54,7 +55,7 @@ export default function Progress() {
 
         <div className="progress-streak-top">
           <div>
-            <h2>🔥 4 Day Streak!</h2>
+            <h2><Icon name="flame" /> 4 Day Streak!</h2>
 
             <p>
               4 days in a row of joyful, pressure-free learning.
@@ -80,7 +81,7 @@ export default function Progress() {
                   index < 4 ? "active" : ""
                 }`}
               >
-                {index < 4 ? "🔥" : index + 1}
+                {index < 4 ? <Icon name="flame" /> : index + 1}
               </div>
             </div>
           ))}
@@ -94,7 +95,7 @@ export default function Progress() {
         <div className="accuracy-copy">
 
           <span className="accuracy-label">
-            🎯 ACCURACY SCORE
+            <Icon name="sparkle" /> ACCURACY SCORE
           </span>
 
           <h2>88% Understanding</h2>
@@ -118,7 +119,7 @@ export default function Progress() {
         <article className="progress-stat-card">
 
           <span>
-            ✅ Accuracy
+            <Icon name="check" /> Accuracy
           </span>
 
           <strong>
@@ -134,7 +135,7 @@ export default function Progress() {
         <article className="progress-stat-card">
 
           <span>
-            ⏱ Focus
+            <Icon name="clock" /> Focus
           </span>
 
           <strong>
@@ -154,7 +155,7 @@ export default function Progress() {
         <div className="reflection-heading">
 
           <div className="reflection-icon">
-            ✨
+            <Icon name="sparkle" />
           </div>
 
           <div>
@@ -172,7 +173,7 @@ export default function Progress() {
         <div className="reflection-tip">
 
           <span>
-            💡
+            <Icon name="lightbulb" />
           </span>
 
           <p>
@@ -188,7 +189,7 @@ export default function Progress() {
         className="progress-practice-btn"
         onClick={() => navigate("/flashcards")}
       >
-        Practice again <span>→</span>
+        Practice again <Icon name="arrowRight" />
       </button>
 
       <button
@@ -203,21 +204,21 @@ export default function Progress() {
         <button
           onClick={() => navigate("/dashboard")}
         >
-          <span>◈</span>
+          <span><Icon name="book" /></span>
           <small>Learn</small>
         </button>
 
         <button
           onClick={() => navigate("/practice")}
         >
-          <span>◉</span>
+          <span><Icon name="play" /></span>
           <small>Practice</small>
         </button>
 
         <button
           onClick={() => navigate("/upload")}
         >
-          <span>✚</span>
+          <span><Icon name="file" /></span>
           <small>Notes</small>
         </button>
 
@@ -225,7 +226,7 @@ export default function Progress() {
           className="active"
           onClick={() => navigate("/progress")}
         >
-          <span>⌁</span>
+          <span><Icon name="chart" /></span>
           <small>Progress</small>
         </button>
 

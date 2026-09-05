@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Dashboard() {
         </div>
 
         <div className="dashboard-header-actions">
-          <span className="header-streak-pill">🔥 5</span>
+          <span className="header-streak-pill"><Icon name="flame" /> 5</span>
           <div className="dashboard-avatar">S</div>
         </div>
       </header>
@@ -42,7 +43,7 @@ export default function Dashboard() {
       <section className="dashboard-streak-card">
         <div className="dashboard-streak-heading">
           <div className="dashboard-streak-icon">
-            🔥
+            <Icon name="flame" />
           </div>
 
           <div>
@@ -73,7 +74,7 @@ export default function Dashboard() {
                   index < 4 ? "active" : ""
                 }`}
               >
-                {index < 4 ? "🔥" : "•"}
+                {index < 4 ? <Icon name="flame" /> : "•"}
               </div>
             </div>
           ))}
@@ -88,7 +89,7 @@ export default function Dashboard() {
       <section className="dashboard-mode-card understand-card">
         <div className="dashboard-mode-top">
           <div className="dashboard-mode-icon purple">
-            ✨
+            <Icon name="sparkle" />
           </div>
 
           <span className="dashboard-mode-pill purple-pill">
@@ -96,7 +97,7 @@ export default function Dashboard() {
           </span>
         </div>
 
-        <h2>Understand ✨</h2>
+        <h2>Understand <Icon name="sparkle" /></h2>
 
         <p>
           Break down tough concepts into simple,
@@ -107,14 +108,14 @@ export default function Dashboard() {
           className="dashboard-mode-btn primary"
           onClick={() => navigate("/upload")}
         >
-          Explore Topic →
+          Explore Topic <Icon name="arrowRight" />
         </button>
       </section>
 
       <section className="dashboard-mode-card practice-card">
         <div className="dashboard-mode-top">
           <div className="dashboard-mode-icon green">
-            🧠
+            <Icon name="brain" />
           </div>
 
           <span className="dashboard-mode-pill green-pill">
@@ -122,7 +123,7 @@ export default function Dashboard() {
           </span>
         </div>
 
-        <h2>Practice 🧠</h2>
+        <h2>Practice <Icon name="brain" /></h2>
 
         <p>
           Test your understanding with gentle,
@@ -150,7 +151,7 @@ export default function Dashboard() {
 
       <section className="dashboard-continue-card">
         <div className="dashboard-topic-icon">
-          🌿
+          <Icon name="leaf" />
         </div>
 
         <div className="dashboard-topic-copy">
@@ -171,7 +172,7 @@ export default function Dashboard() {
           className="dashboard-topic-arrow"
           onClick={() => navigate("/upload")}
         >
-          →
+          <Icon name="arrowRight" />
         </button>
       </section>
 
@@ -180,28 +181,28 @@ export default function Dashboard() {
           className="active"
           onClick={() => navigate("/dashboard")}
         >
-          <span>◈</span>
+          <span><Icon name="book" /></span>
           <small>Learn</small>
         </button>
 
         <button
           onClick={() => navigate("/practice")}
         >
-          <span>◉</span>
+          <span><Icon name="play" /></span>
           <small>Practice</small>
         </button>
 
         <button
           onClick={() => navigate("/upload")}
         >
-          <span>✚</span>
+          <span><Icon name="file" /></span>
           <small>Notes</small>
         </button>
 
         <button
           onClick={() => navigate("/progress")}
         >
-          <span>⌁</span>
+          <span><Icon name="chart" /></span>
           <small>Progress</small>
         </button>
       </nav>

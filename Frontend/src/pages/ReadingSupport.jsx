@@ -1,38 +1,39 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 const supportOptions = [
   {
     id: "largerText",
-    icon: "T",
-    title: "Larger text 🔍",
+    icon: "list",
+    title: "Larger text",
     description:
       "Increase baseline body font size to make reading feel easier and clearer.",
   },
   {
     id: "spacing",
-    icon: "↕",
-    title: "More spacing 📐",
+    icon: "spacing",
+    title: "More spacing",
     description:
       "Add more line and word spacing to reduce visual crowding.",
   },
   {
     id: "shortParagraphs",
-    icon: "≡",
-    title: "Shorter paragraphs 📄",
+    icon: "list",
+    title: "Shorter paragraphs",
     description:
       "Break dense blocks of text into smaller, easier-to-process sections.",
   },
   {
     id: "highlight",
-    icon: "✎",
-    title: "Highlight words 🖍️",
+    icon: "pencil",
+    title: "Highlight words",
     description:
       "Gently emphasize key terms and important concepts.",
   },
   {
     id: "readAloud",
-    icon: "🔊",
+    icon: "volume",
     title: "Read aloud",
     description:
       "Use natural speech to listen to explanations and study material.",
@@ -66,7 +67,7 @@ export default function ReadingSupport() {
           onClick={() => navigate("/onboarding/explanations")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
@@ -111,7 +112,7 @@ export default function ReadingSupport() {
         <div className="reading-preview-top">
 
           <span className="preview-label">
-            ◉ Live Preview
+            <Icon name="sparkle" /> Live Preview
           </span>
 
           <span className="calm-mode-pill">
@@ -142,7 +143,7 @@ export default function ReadingSupport() {
             >
 
               <div className="reading-support-icon">
-                {option.icon}
+                <Icon name={option.icon} />
               </div>
 
               <div className="reading-support-copy">
@@ -173,7 +174,7 @@ export default function ReadingSupport() {
         className="reading-continue-btn"
         onClick={() => navigate("/onboarding/profile")}
       >
-        Continue <span>→</span>
+        Continue <Icon name="arrowRight" />
       </button>
 
     </main>

@@ -242,8 +242,3 @@ a {
     padding: 18px;
   }
 }
-
-@import "../components/ui/ui.css";
-@import "../components/layout/layout.css";
-@import "../components/learning/learning.css";
-@import "./components.css";

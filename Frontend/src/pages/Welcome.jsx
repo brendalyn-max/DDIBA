@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export default function Welcome() {
       {/* Top */}
       <header className="welcome-header">
         <span className="gentle-pill">
-          🌿 Gentle Pace
+          <Icon name="leaf" /> Gentle Pace
         </span>
       </header>
 
@@ -18,15 +19,15 @@ export default function Welcome() {
       <section className="welcome-hero-section">
 
         <span className="floating-chip chip-stories">
-          📖 Stories & Text
+          <Icon name="book" /> Stories & Text
         </span>
 
         <span className="floating-chip chip-ai">
-          ❓ ✨ AI Tailored
+          <Icon name="sparkle" /> AI Tailored
         </span>
 
         <span className="sparkle-bubble">
-          ✦
+          <Icon name="sparkle" />
         </span>
 
         <div className="welcome-hero-circle">
@@ -42,11 +43,11 @@ export default function Welcome() {
         </div>
 
         <span className="floating-chip chip-mindmaps">
-          ✣ Mindmaps
+          <Icon name="network" /> Mindmaps
         </span>
 
         <span className="floating-chip chip-visuals">
-          💡 Quick Visuals
+          <Icon name="lightbulb" /> Quick Visuals
         </span>
 
       </section>
@@ -55,7 +56,7 @@ export default function Welcome() {
       <section className="welcome-text">
 
         <span className="stress-pill">
-          ✨ Stress-Free Study
+          <Icon name="sparkle" /> Stress-Free Study
         </span>
 
         <h1>Learn your way.</h1>
@@ -76,7 +77,7 @@ export default function Welcome() {
           onClick={() => navigate("/auth")}
         >
           Get Started
-          <span>→</span>
+          <Icon name="arrowRight" />
         </button>
 
         <button
@@ -90,7 +91,7 @@ export default function Welcome() {
 
       {/* Bottom reassurance */}
       <div className="welcome-reassurance">
-        <span className="reassurance-icon">✹</span>
+        <span className="reassurance-icon"><Icon name="sparkle" /></span>
 
         <p>
           Learning should adapt to the learner.

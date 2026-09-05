@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Icon from "../components/ui/Icon";
 
 const explanationOptions = [
   {
     id: "simple",
-    icon: "🌿",
+    icon: "leaf",
     title: "Keep it simple",
     badge: "Great for quick grasp",
     badgeClass: "green",
@@ -13,7 +14,7 @@ const explanationOptions = [
   },
   {
     id: "breakdown",
-    icon: "🧩",
+    icon: "list",
     title: "Break it down",
     badge: "Most popular",
     badgeClass: "orange",
@@ -22,7 +23,7 @@ const explanationOptions = [
   },
   {
     id: "deep",
-    icon: "🔬",
+    icon: "microscope",
     title: "Go deeper",
     badge: "For mastery",
     badgeClass: "blue",
@@ -57,7 +58,7 @@ export default function ExplanationPreference() {
           onClick={() => navigate("/onboarding/learning-style")}
           aria-label="Go back"
         >
-          ←
+          <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
@@ -83,7 +84,7 @@ export default function ExplanationPreference() {
       </section>
 
       <span className="explanation-flow-label">
-        ❓ Personalized Flow
+        <Icon name="help" /> Personalized Flow
       </span>
 
       <section className="explanation-heading">
@@ -118,7 +119,7 @@ export default function ExplanationPreference() {
             >
 
               <div className="explanation-icon">
-                {option.icon}
+                <Icon name={option.icon} />
               </div>
 
               <div className="explanation-card-content">
@@ -157,7 +158,7 @@ export default function ExplanationPreference() {
             navigate("/onboarding/learning-style")
           }
         >
-          ← Back
+          <Icon name="arrowLeft" /> Back
         </button>
 
         <button
@@ -166,7 +167,7 @@ export default function ExplanationPreference() {
             navigate("/onboarding/reading-support")
           }
         >
-          Next →
+          Next <Icon name="arrowRight" />
         </button>
 
       </div>
