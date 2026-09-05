@@ -18,7 +18,7 @@ Including another URLconf
 # from django.urls import path
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from api.views import test_api
 from api.views import submit_onboarding
 
@@ -57,4 +57,5 @@ urlpatterns = [
     ),
 
     path("api/onboarding/", submit_onboarding, name="submit_onboarding"),
+    path("api/", include("learn.urls")),
 ]
