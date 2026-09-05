@@ -522,6 +522,29 @@
     );
 }
 
+.auth-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 0 4px;
+  color: #17152d;
+  font-size: 42px;
+  font-weight: 850;
+  letter-spacing: -0.4px;
+}
+
+.auth-brand-logo {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #e6ddff;
+  color: #5032be;
+  font-size: 20px;
+}
+
 
 /* =========================
    ADAPTIVE BANNER
@@ -619,30 +642,20 @@
    HEADING
    ========================= */
 
-.auth-heading {
-  margin-top: 27px;
+.auth-title {
+  margin-top: 8px;
+  text-align: center;
 }
 
-.auth-heading h1 {
-  margin: 0 0 8px;
+.auth-title h1 {
+  margin: 0;
 
   color: #111625;
 
-  font-size: 28px;
-  font-weight: 850;
+  font-size: 18px;
+  font-weight: 700;
 
-  letter-spacing: -0.7px;
-}
-
-.auth-heading p {
-  max-width: 325px;
-
-  margin: 0;
-
-  color: #3d3f50;
-
-  font-size: 15px;
-  line-height: 1.6;
+  letter-spacing: 0;
 }
 
 
@@ -656,6 +669,45 @@
   gap: 11px;
 
   margin-top: 25px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 13px;
+}
+
+.auth-field {
+  display: grid;
+  gap: 7px;
+  color: #252637;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.auth-field input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 15px;
+  border: 1px solid #dfe1ef;
+  border-radius: 14px;
+  outline: none;
+  background: #ffffff;
+  color: #171a27;
+  font-size: 15px;
+}
+
+.auth-field input:focus {
+  border-color: #765ce0;
+  box-shadow: 0 0 0 3px rgba(118, 92, 224, 0.13);
+}
+
+.auth-login-btn {
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  color: #5032be;
+  font-size: 14px;
+  font-weight: 750;
 }
 
 .auth-main-btn {
