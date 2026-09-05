@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 const learningOptions = [
   {
@@ -47,7 +48,7 @@ export default function LearningStyle() {
   };
 
   return (
-    <main className="learning-style-page">
+    <ResponsiveLayout className="learning-style-page">
 
       <header className="onboarding-topbar">
         <button
@@ -153,6 +154,6 @@ export default function LearningStyle() {
         Next <Icon name="arrowRight" />
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }

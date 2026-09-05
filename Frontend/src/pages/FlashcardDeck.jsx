@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 
 export default function FlashcardDeck() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function FlashcardDeck() {
   ];
 
   return (
-    <main className="flashcard-deck-page">
+    <ResponsiveLayout className="flashcard-deck-page">
 
       <header className="flashcard-header">
         <button
@@ -188,6 +189,6 @@ export default function FlashcardDeck() {
         Start Flashcards (15 Cards) <Icon name="arrowRight" />
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }
