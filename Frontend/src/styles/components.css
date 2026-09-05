@@ -4,7 +4,7 @@
 
 .welcome-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
   margin: 0 auto;
   padding: 20px 18px 32px;
@@ -98,56 +98,6 @@
 
   box-shadow:
     0 10px 25px rgba(74, 47, 185, 0.16);
-}
-
-
-/* Ddiba logo inside circle */
-
-.ddiba-center-logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 7px;
-}
-
-.ddiba-logo-icon {
-  width: 72px;
-  height: 72px;
-
-  display: grid;
-  place-items: center;
-
-  border-radius: 22px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #7658ff,
-      #5635e5
-    );
-
-  box-shadow:
-    0 7px 16px rgba(79, 51, 195, 0.25);
-}
-
-.book-shape {
-  color: #ffffff;
-
-  font-size: 40px;
-  font-weight: 900;
-
-  line-height: 1;
-}
-
-.ddiba-center-name {
-  color: #5237c8;
-
-  font-size: 30px;
-  font-weight: 850;
-
-  letter-spacing: -0.8px;
 }
 
 
@@ -258,7 +208,7 @@
 
   color: #111526;
 
-  font-size: 29px;
+  font-size: clamp(26px, 7vw, 29px);
   font-weight: 850;
 
   line-height: 1.15;
@@ -273,7 +223,7 @@
 
   color: #505264;
 
-  font-size: 15px;
+  font-size: clamp(14px, 3.8vw, 15px);
 
   line-height: 1.65;
 }
@@ -385,35 +335,49 @@
 
 /* Small phones */
 
-@media (max-width: 380px) {
-
-  .welcome-page {
-    padding-left: 13px;
-    padding-right: 13px;
-  }
+@media (max-width: 480px) {
 
   .welcome-hero-section {
-    height: 320px;
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
 
   .welcome-hero-circle {
-    top: 85px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    order: 1;
+    flex: 0 0 auto;
+    margin: 24px 100% 0;
+  }
 
+  .floating-chip {
+    position: static;
+    order: 2;
+  }
+
+  .sparkle-bubble {
+    top: 86px;
+    right: calc(50% - 104px);
+  }
+}
+
+@media (max-width: 380px) {
+
+  .welcome-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .welcome-hero-circle {
     width: 165px;
     height: 165px;
-  }
-
-  .ddiba-logo-icon {
-    width: 62px;
-    height: 62px;
-  }
-
-  .book-shape {
-    font-size: 34px;
-  }
-
-  .ddiba-center-name {
-    font-size: 26px;
   }
 
   .floating-chip {
@@ -422,42 +386,57 @@
     font-size: 10px;
   }
 
-  .chip-mindmaps,
-  .chip-visuals {
-    top: 250px;
-  }
-
   .sparkle-bubble {
-    right: 48px;
-  }
-
-  .welcome-text h1 {
-    font-size: 26px;
-  }
-
-  .welcome-text p {
-    font-size: 14px;
+    right: calc(50% - 91px);
   }
 }
 
 
 /* Tablet / desktop */
 
-@media (min-width: 700px) {
+@media (min-width: 481px) {
+  .welcome-page {
+    max-width: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
 
-  body {
-    background: #ececf4;
+@media (min-width: 1024px) {
+
+  .welcome-brand-panel,
+  .welcome-content-panel {
+    min-width: 0;
+    min-height: 100vh;
   }
 
-  .welcome-page {
-    min-height: calc(100vh - 50px);
+  .welcome-brand-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px clamp(32px, 6vw, 96px);
+  }
 
-    margin: 25px auto;
+  .welcome-brand-panel .welcome-header {
+    width: 100%;
+  }
 
-    border-radius: 30px;
+  .welcome-brand-panel .stress-pill {
+    margin: 0 auto;
+  }
 
-    box-shadow:
-      0 8px 35px rgba(25, 25, 45, 0.12);
+  .welcome-content-panel {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 40px clamp(32px, 6vw, 96px) 32px;
+  }
+
+  .welcome-content-main {
+    width: min(100%, 420px);
+    margin: auto;
   }
 }
 
@@ -467,7 +446,7 @@
 
 .auth-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 18px 28px;
@@ -478,6 +457,29 @@
       #fbfbff 0%,
       #f8f8ff 100%
     );
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 22px 0 4px;
+  color: #17152d;
+  font-size: 42px;
+  font-weight: 850;
+  letter-spacing: -0.4px;
+}
+
+.auth-brand-logo {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #e6ddff;
+  color: #5032be;
+  font-size: 20px;
 }
 
 
@@ -577,30 +579,20 @@
    HEADING
    ========================= */
 
-.auth-heading {
-  margin-top: 27px;
+.auth-title {
+  margin-top: 8px;
+  text-align: center;
 }
 
-.auth-heading h1 {
-  margin: 0 0 8px;
+.auth-title h1 {
+  margin: 0;
 
   color: #111625;
 
-  font-size: 28px;
-  font-weight: 850;
+  font-size: 18px;
+  font-weight: 700;
 
-  letter-spacing: -0.7px;
-}
-
-.auth-heading p {
-  max-width: 325px;
-
-  margin: 0;
-
-  color: #3d3f50;
-
-  font-size: 15px;
-  line-height: 1.6;
+  letter-spacing: 0;
 }
 
 
@@ -614,6 +606,45 @@
   gap: 11px;
 
   margin-top: 25px;
+}
+
+.auth-form {
+  display: grid;
+  gap: 13px;
+}
+
+.auth-field {
+  display: grid;
+  gap: 7px;
+  color: #252637;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.auth-field input {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 15px;
+  border: 1px solid #dfe1ef;
+  border-radius: 14px;
+  outline: none;
+  background: #ffffff;
+  color: #171a27;
+  font-size: 15px;
+}
+
+.auth-field input:focus {
+  border-color: #765ce0;
+  box-shadow: 0 0 0 3px rgba(118, 92, 224, 0.13);
+}
+
+.auth-login-btn {
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  color: #5032be;
+  font-size: 14px;
+  font-weight: 750;
 }
 
 .auth-main-btn {
@@ -998,7 +1029,7 @@
 
 .onboarding-intro-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
   margin: 0 auto;
   padding: 0 18px 30px;
@@ -1414,13 +1445,20 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
+
+@media (min-width: 1024px) {
+
+  .onboarding-benefits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 /* =========================================
    SCREEN 4 — LEARNING STYLE
    ========================================= */
 
 .learning-style-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -1799,7 +1837,7 @@
 
 .explanation-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -2135,7 +2173,7 @@
 
 .reading-support-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -2521,7 +2559,7 @@
 
 .profile-summary-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -2948,7 +2986,7 @@
 
 .dashboard-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -3509,7 +3547,7 @@
 /* BOTTOM NAVIGATION */
 
 .dashboard-bottom-nav {
-  width: min(430px, 100%);
+  width: 100%;
   height: 67px;
 
   position: fixed;
@@ -3609,7 +3647,7 @@
 
 .upload-material-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -4188,7 +4226,7 @@
    ========================= */
 
 .upload-bottom-nav {
-  width: min(430px, 100%);
+  width: 100%;
   height: 67px;
 
   position: fixed;
@@ -4292,7 +4330,7 @@
 
 .lesson-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -4873,7 +4911,7 @@
 
 .practice-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -5410,7 +5448,7 @@
 /* BOTTOM NAV */
 
 .practice-bottom-nav {
-  width: min(430px, 100%);
+  width: 100%;
   height: 67px;
 
   position: fixed;
@@ -5506,7 +5544,7 @@
 
 .progress-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -6055,7 +6093,7 @@
 /* BOTTOM NAV */
 
 .progress-bottom-nav {
-  width: min(430px, 100%);
+  width: 100%;
   height: 67px;
 
   position: fixed;
@@ -6152,7 +6190,7 @@
 
 .flashcard-deck-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -6707,7 +6745,7 @@
 
 .session-summary-page {
   width: 100%;
-  max-width: 430px;
+  max-width: none;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -7261,16 +7299,157 @@
 
 @media (min-width: 700px) {
   .session-summary-page {
-    min-height: calc(100vh - 50px);
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    overflow: visible;
+    box-shadow: none;
+  }
+}
 
-    margin: 25px auto;
+/* =========================================
+   FULL-SCREEN PAGE SHELL
+   ========================================= */
 
-    border-radius: 30px;
+.welcome-page,
+.auth-page,
+.onboarding-intro-page,
+.learning-style-page,
+.explanation-page,
+.reading-support-page,
+.profile-summary-page,
+.dashboard-page,
+.upload-material-page,
+.lesson-page,
+.practice-page,
+.progress-page,
+.flashcard-deck-page,
+.session-summary-page {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+}
 
-    overflow: hidden;
+.welcome-page {
+  overflow: auto;
+}
 
-    box-shadow:
-      0 8px 35px rgba(25, 25, 45, 0.12);
+.adaptive-banner,
+.onboarding-topbar,
+.onboarding-hero-card,
+.lesson-header,
+.flashcard-header,
+.session-summary-header {
+  margin-left: calc(-1 * var(--page-pad-x));
+  margin-right: calc(-1 * var(--page-pad-x));
+  padding-left: var(--page-pad-x);
+  padding-right: var(--page-pad-x);
+}
+
+.dashboard-bottom-nav,
+.upload-bottom-nav,
+.practice-bottom-nav,
+.progress-bottom-nav {
+  width: 100%;
+  left: 0;
+  right: 0;
+  transform: none;
+  bottom: 0;
+  border-radius: 0;
+}
+
+@media (min-width: 700px) {
+  .auth-page,
+  .onboarding-intro-page,
+  .learning-style-page,
+  .explanation-page,
+  .reading-support-page,
+  .profile-summary-page,
+  .dashboard-page,
+  .upload-material-page,
+  .lesson-page,
+  .practice-page,
+  .progress-page,
+  .flashcard-deck-page,
+  .session-summary-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .dashboard-bottom-nav,
+  .upload-bottom-nav,
+  .practice-bottom-nav,
+  .progress-bottom-nav {
+    bottom: 0;
+    border-radius: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .learning-options,
+  .onboarding-benefits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .progress-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .dashboard-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    align-content: start;
+  }
+
+  .dashboard-header,
+  .dashboard-greeting,
+  .dashboard-streak-card,
+  .dashboard-section-heading,
+  .dashboard-continue-card,
+  .dashboard-bottom-nav {
+    grid-column: 1 / -1;
+  }
+
+  .welcome-text p,
+  .auth-heading p,
+  .adaptive-content p {
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .welcome-page {
+    padding: 0;
+  }
+
+  .welcome-content-main {
+    width: min(100%, 480px);
+  }
+
+  .learning-options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .onboarding-benefits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .upload-text-card textarea {
+    min-height: 280px;
   }
 }
 /* =========================================

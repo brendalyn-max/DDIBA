@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import ResponsiveLayout from "../components/layout/ResponsiveLayout";
+import LogoMark from "../components/Logo/LogoMark";
 
 const supportOptions = [
   {
@@ -51,9 +51,6 @@ export default function ReadingSupport() {
     "shortParagraphs",
   ]);
 
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-
   const toggleSupport = (id) => {
     setEnabled((current) =>
       current.includes(id)
@@ -62,78 +59,25 @@ export default function ReadingSupport() {
     );
   };
 
-  const saveReadingSupport = async () => {
-    try {
-      setSaving(true);
-      setError("");
-
-      const response = await fetch(
-        `${API_BASE_URL}/api/profile/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            larger_text: enabled.includes("largerText"),
-            more_spacing: enabled.includes("spacing"),
-            shorter_paragraphs:
-              enabled.includes("shortParagraphs"),
-            highlight_words: enabled.includes("highlight"),
-            read_aloud: enabled.includes("readAloud"),
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.detail ||
-            "Could not save your reading preferences."
-        );
-      }
-
-      navigate("/onboarding/profile");
-    } catch (err) {
-      console.error(err);
-
-      setError(
-        err.message ||
-          "Something went wrong while saving your preferences."
-      );
-    } finally {
-      setSaving(false);
-    }
-  };
-
   return (
-    <main className="reading-support-page">
+    <ResponsiveLayout className="reading-support-page">
 
       <header className="onboarding-topbar">
 
         <button
           className="onboarding-back-btn"
-          onClick={() =>
-            navigate("/onboarding/explanations")
-          }
+          onClick={() => navigate("/onboarding/explanations")}
           aria-label="Go back"
-          disabled={saving}
         >
           <Icon name="arrowLeft" />
         </button>
 
         <div className="onboarding-brand">
-          <div className="onboarding-brand-logo">
-            ⌣
-          </div>
-
+          <LogoMark size={31} />
           <span>Onboarding Goals</span>
         </div>
 
-        <div className="onboarding-avatar">
-          S
-        </div>
+        <div className="onboarding-avatar">S</div>
 
       </header>
 
@@ -179,21 +123,7 @@ export default function ReadingSupport() {
 
         </div>
 
-        <p
-          style={{
-            fontSize: enabled.includes("largerText")
-              ? "18px"
-              : undefined,
-
-            lineHeight: enabled.includes("spacing")
-              ? "1.9"
-              : undefined,
-
-            letterSpacing: enabled.includes("spacing")
-              ? "0.02em"
-              : undefined,
-          }}
-        >
+        <p>
           Neurodiversity-first learning reduces
           cognitive friction. Every thought flows
           clearly and patiently.
@@ -204,18 +134,14 @@ export default function ReadingSupport() {
       <section className="reading-support-list">
 
         {supportOptions.map((option) => {
-          const isEnabled =
-            enabled.includes(option.id);
+          const isEnabled = enabled.includes(option.id);
 
           return (
             <button
               key={option.id}
               type="button"
               className="reading-support-card"
-              onClick={() =>
-                toggleSupport(option.id)
-              }
-              disabled={saving}
+              onClick={() => toggleSupport(option.id)}
             >
 
               <div className="reading-support-icon">
@@ -246,35 +172,13 @@ export default function ReadingSupport() {
 
       </section>
 
-      {error && (
-        <div
-          style={{
-            marginTop: "14px",
-            padding: "11px 12px",
-            borderRadius: "12px",
-            background: "#fff0f2",
-            color: "#a2394a",
-            fontSize: "12px",
-          }}
-        >
-          {error}
-        </div>
-      )}
-
       <button
         className="reading-continue-btn"
-        onClick={saveReadingSupport}
-        disabled={saving}
+        onClick={() => navigate("/onboarding/profile")}
       >
-        {saving ? (
-          "Saving..."
-        ) : (
-          <>
-            Continue <Icon name="arrowRight" />
-          </>
-        )}
+        Continue <Icon name="arrowRight" />
       </button>
 
-    </main>
+    </ResponsiveLayout>
   );
 }
