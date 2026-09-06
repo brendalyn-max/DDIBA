@@ -29,9 +29,8 @@ export default function Auth() {
 
       const endpoint =
         mode === "register"
-          ? `${API_BASE_URL}/api/auth/register/`
-          : `${API_BASE_URL}/api/auth/login/`;
-
+          ? `${API_BASE_URL}/api/register/`
+          : `${API_BASE_URL}/api/login/`;
       const response = await fetch(endpoint, {
         method: "POST",
 
@@ -79,7 +78,7 @@ export default function Auth() {
 
       setError(
         err.message ||
-          "Something went wrong. Please try again."
+        "Something went wrong. Please try again."
       );
 
     } finally {

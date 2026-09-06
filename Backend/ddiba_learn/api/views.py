@@ -18,6 +18,7 @@ from .serializers import (
     AdaptLessonSerializer,
     EvaluateAnswerSerializer,
     LearnerProfileSerializer,
+    OnboardingSerializer,
     PracticeQuestionsSerializer,
 )
 
@@ -283,6 +284,108 @@ def learner_profile(request):
         status=status.HTTP_200_OK,
     )
 
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def submit_onboarding(request):
+    serializer = OnboardingSerializer(
+        data=request.data
+    )
+
+    serializer.is_valid(
+        raise_exception=True
+    )
+
+    data = serializer.validated_data
+
+    profile = get_profile(
+        request.user
+    )
+
+    learning_style = data.get(
+        "learning_style",
+        [],
+    )
+
+    profile.short_explanations = (
+        "short" in learning_style
+    )
+
+    profile.step_by_step = (
+        "steps" in learning_style
+    )
+
+    profile.examples = (
+        "examples" in learning_style
+    )
+
+    if hasattr(
+        profile,
+        "listening_enabled",
+    ):
+        profile.listening_enabled = (
+            "listening" in learning_style
+        )
+
+    explanation_depth = data.get(
+        "explanation_depth",
+        [],
+    )
+
+    if (
+        explanation_depth
+        and hasattr(
+            profile,
+            "explanation_depth",
+        )
+    ):
+        profile.explanation_depth = (
+            explanation_depth[0]
+        )
+
+    reading_support = data.get(
+        "reading_support",
+        [],
+    )
+
+    profile.larger_text = (
+        "largerText"
+        in reading_support
+    )
+
+    profile.more_spacing = (
+        "spacing"
+        in reading_support
+    )
+
+    profile.shorter_paragraphs = (
+        "shortParagraphs"
+        in reading_support
+    )
+
+    profile.highlight_words = (
+        "highlight"
+        in reading_support
+    )
+
+    profile.read_aloud = (
+        "readAloud"
+        in reading_support
+    )
+
+    if hasattr(
+        profile,
+        "onboarding_complete",
+    ):
+        profile.onboarding_complete = True
+
+    profile.save()
+
+    return Response(
+        LearnerProfileSerializer(
+            profile
+        ).data,
+        status=status.HTTP_200_OK,
+    )
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
