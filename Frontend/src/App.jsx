@@ -15,6 +15,8 @@ import Progress from "./pages/Progress";
 import FlashcardDeck from "./pages/FlashcardDeck";
 import SessionSummary from "./pages/SessionSummary";
 import Subscription from "./pages/Subscription";
+import Flashcards from "./pages/Flashcards";
+import Pricing from "./pages/Pricing";
 
 function ProtectedRoute({ children }) {
   const location = useLocation();
@@ -54,6 +56,15 @@ export default function App() {
       <Route path="/session-summary" element={<ProtectedRoute><SessionSummary /></ProtectedRoute>} />
       <Route path="/subscription" element={<ProtectedRoute><Subscription /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" replace />} />
+      <Route
+        path="/flashcards"
+        element={<Flashcards />}
+      />
+      <Route
+        path="/pricing"
+        element={<Pricing />}
+      />
+
     </Routes>
   );
 }

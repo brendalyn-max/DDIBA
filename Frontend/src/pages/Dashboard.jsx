@@ -1,5 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+} from "react-router-dom";
+
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
@@ -8,9 +15,14 @@ import { apiFetch } from "../services/api";
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const [dashboard, setDashboard] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [dashboard, setDashboard] =
+    useState(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -23,13 +35,15 @@ export default function Dashboard() {
         );
 
         setDashboard(data);
+
       } catch (err) {
         console.error(err);
 
         setError(
           err.message ||
-            "Could not load your dashboard."
+          "Could not load your dashboard."
         );
+
       } finally {
         setLoading(false);
       }
@@ -39,10 +53,14 @@ export default function Dashboard() {
   }, []);
 
   const learnerName =
-    dashboard?.learner_name || "Learner";
+    dashboard?.learner_name ||
+    localStorage.getItem("ddiba_name") ||
+    "Learner";
 
   const initial =
-    learnerName.charAt(0).toUpperCase();
+    learnerName
+      .charAt(0)
+      .toUpperCase();
 
   const accuracy =
     dashboard?.accuracy ?? 0;
@@ -59,14 +77,34 @@ export default function Dashboard() {
   const recent =
     dashboard?.recent_learning;
 
-  return (
-    <ResponsiveLayout className="dashboard-page">
+  const pace =
+    dashboard?.pace || "gentle";
 
+  const streakDays =
+    dashboard?.streak_days ?? 5;
+
+  const xp =
+    dashboard?.xp ?? 120;
+
+  const weekDays = [
+    "M",
+    "T",
+    "W",
+    "T",
+    "F",
+    "S",
+    "S",
+  ];
+
+  return (
+    <ResponsiveLayout
+      className="dashboard-page prototype-dashboard-page"
+    >
       <header className="dashboard-header">
 
         <div className="dashboard-brand">
 
-          <LogoMark size={39} />
+          <LogoMark size={34} />
 
           <div className="dashboard-brand-copy">
             <small>Ddiba</small>
@@ -78,7 +116,8 @@ export default function Dashboard() {
         <div className="dashboard-header-actions">
 
           <span className="header-streak-pill">
-            <Icon name="brain" /> {questionsAnswered}
+            <Icon name="flame" />
+            {streakDays}
           </span>
 
           <div className="dashboard-avatar">
@@ -92,7 +131,6 @@ export default function Dashboard() {
       <section className="dashboard-greeting">
 
         <div>
-
           <h1>
             Hi, {learnerName} 👋
           </h1>
@@ -100,21 +138,20 @@ export default function Dashboard() {
           <p>
             Ready to learn something joyful today?
           </p>
-
         </div>
 
         <div className="dashboard-profile-picture">
-
           <span>{initial}</span>
           <i></i>
-
         </div>
 
       </section>
 
       {loading && (
         <section className="dashboard-streak-card">
-          <p>Loading your learning progress...</p>
+          <p>
+            Loading your learning progress...
+          </p>
         </section>
       )}
 
@@ -131,7 +168,7 @@ export default function Dashboard() {
             <div className="dashboard-streak-heading">
 
               <div className="dashboard-streak-icon">
-                <Icon name="chart" />
+                <Icon name="flame" />
               </div>
 
               <div>
@@ -139,82 +176,57 @@ export default function Dashboard() {
                 <div className="dashboard-streak-title-row">
 
                   <h2>
-                    {accuracy}% Understanding
+                    {streakDays} Day Streak!
                   </h2>
 
                   <span>
-                    {dashboard?.pace || "gentle"} pace
+                    +{xp} XP
                   </span>
 
                 </div>
 
                 <p>
-                  {questionsAnswered} practice questions completed.
-                  <br />
-                  Keep building your confidence.
+                  Joyful, pressure-free learning every day.
                 </p>
 
               </div>
 
             </div>
 
-            <div
-              style={{
-                marginTop: "18px",
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(3, minmax(0, 1fr))",
-                gap: "10px",
-              }}
-            >
+            <div className="dashboard-week">
 
-              <article className="progress-stat-card">
+              {weekDays.map(
+                (day, index) => {
+                  const active =
+                    index < streakDays;
 
-                <span>
-                  <Icon name="book" /> Lessons
-                </span>
+                  return (
+                    <div
+                      key={`${day}-${index}`}
+                      className="dashboard-day"
+                    >
 
-                <strong>
-                  {lessonsCreated}
-                </strong>
+                      <span>
+                        {day}
+                      </span>
 
-                <p>
-                  Adapted lessons
-                </p>
+                      <div
+                        className={`dashboard-day-circle ${active
+                          ? "active"
+                          : ""
+                          }`}
+                      >
+                        {active ? (
+                          <Icon name="flame" />
+                        ) : (
+                          index + 1
+                        )}
+                      </div>
 
-              </article>
-
-              <article className="progress-stat-card">
-
-                <span>
-                  <Icon name="check" /> Correct
-                </span>
-
-                <strong>
-                  {correctAnswers}
-                </strong>
-
-                <p>
-                  Correct answers
-                </p>
-
-              </article>
-
-              <article className="progress-stat-card">
-
-                <span>
-                  <Icon name="chart" /> Accuracy
-                </span>
-
-                <strong>
-                  {accuracy}%
-                </strong>
-
-                <p>
-                  Understanding
-                </p>
-
-              </article>
+                    </div>
+                  );
+                }
+              )}
 
             </div>
 
@@ -222,10 +234,12 @@ export default function Dashboard() {
 
           <div className="dashboard-section-heading">
 
-            <h3>Core Modes</h3>
+            <h3>
+              Core Modes
+            </h3>
 
             <span>
-              Personalized for {learnerName}
+              Personalized for you
             </span>
 
           </div>
@@ -239,18 +253,19 @@ export default function Dashboard() {
               </div>
 
               <span className="dashboard-mode-pill purple-pill">
-                AI Explanations
+                Adapted Reading
               </span>
 
             </div>
 
             <h2>
-              Understand <Icon name="sparkle" />
+              Understand
+              <Icon name="sparkle" />
             </h2>
 
             <p>
-              Break down tough concepts into simple,
-              friendly ideas & intuitive analogies.
+              Break down tough textbooks and notes
+              into simple, visual, chunked lessons.
             </p>
 
             <button
@@ -259,7 +274,7 @@ export default function Dashboard() {
                 navigate("/upload")
               }
             >
-              Explore Topic{" "}
+              Explore Topic
               <Icon name="arrowRight" />
             </button>
 
@@ -274,35 +289,96 @@ export default function Dashboard() {
               </div>
 
               <span className="dashboard-mode-pill green-pill">
-                AI Practice
+                Gentle Recall
               </span>
 
             </div>
 
             <h2>
-              Practice <Icon name="brain" />
+              Practice
+              <Icon name="brain" />
             </h2>
 
             <p>
               Test your understanding with gentle,
-              supportive questions generated from
-              your own lesson.
+              no-stress questions and zero timers.
             </p>
 
             <button
               className="dashboard-mode-btn green"
-              onClick={() =>
-                navigate("/upload")
-              }
+              onClick={() => {
+                if (recent) {
+                  navigate(
+                    "/practice",
+                    {
+                      state: {
+                        subject:
+                          recent.subject,
+                        adaptedText:
+                          recent.adapted_text ||
+                          "",
+                      },
+                    }
+                  );
+                } else {
+                  navigate("/upload");
+                }
+              }}
             >
-              Start from a lesson ⚡
+              Start Practice
+              <Icon name="arrowRight" />
             </button>
 
           </section>
 
           <div className="dashboard-section-heading">
 
-            <h3>Continue Learning</h3>
+            <h3>
+              Continue Learning
+            </h3>
+            <section className="dashboard-quick-cards">
+
+              <button
+                type="button"
+                className="dashboard-quick-card"
+                onClick={() => navigate("/flashcards")}
+              >
+                <div className="dashboard-quick-icon flashcard-icon">
+                  <Icon name="layers" />
+                </div>
+
+                <div>
+                  <strong>Flashcards</strong>
+
+                  <span>
+                    {dashboard?.flashcards_due
+                      ? `${dashboard.flashcards_due} cards due`
+                      : "Create from your lessons"}
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                className="dashboard-quick-card"
+                onClick={() => navigate("/pricing")}
+              >
+                <div className="dashboard-quick-icon plan-icon">
+                  <Icon name="heart" />
+                </div>
+
+                <div>
+                  <strong>
+                    {dashboard?.plan_name || "7-Day Free Trial"}
+                  </strong>
+
+                  <span>
+                    View Pro & Premium plans
+                  </span>
+                </div>
+              </button>
+
+            </section>
 
             <button
               type="button"
@@ -316,7 +392,6 @@ export default function Dashboard() {
           </div>
 
           {recent ? (
-
             <section className="dashboard-continue-card">
 
               <div className="dashboard-topic-icon">
@@ -326,7 +401,7 @@ export default function Dashboard() {
               <div className="dashboard-topic-copy">
 
                 <span>
-                  {recent.subject}
+                  Continue Reading
                 </span>
 
                 <h3>
@@ -334,17 +409,18 @@ export default function Dashboard() {
                 </h3>
 
                 <p>
-                  Your most recently adapted lesson
+                  {recent.subject}
                 </p>
 
                 <div className="dashboard-topic-progress">
 
                   <div
                     style={{
-                      width: `${Math.max(
-                        10,
-                        accuracy
-                      )}%`,
+                      width:
+                        `${Math.max(
+                          10,
+                          accuracy
+                        )}%`,
                     }}
                   />
 
@@ -355,16 +431,28 @@ export default function Dashboard() {
               <button
                 className="dashboard-topic-arrow"
                 onClick={() =>
-                  navigate("/upload")
+                  navigate(
+                    "/lesson",
+                    {
+                      state: {
+                        subject:
+                          recent.subject,
+                        simplifiedText:
+                          recent.adapted_text ||
+                          "",
+                        keyPoints:
+                          recent.key_points ||
+                          [],
+                      },
+                    }
+                  )
                 }
               >
                 <Icon name="arrowRight" />
               </button>
 
             </section>
-
           ) : (
-
             <section className="dashboard-continue-card">
 
               <div className="dashboard-topic-icon">
@@ -397,9 +485,70 @@ export default function Dashboard() {
               </button>
 
             </section>
-
           )}
 
+          <section
+            style={{
+              marginTop: "18px",
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(3, minmax(0, 1fr))",
+              gap: "10px",
+            }}
+          >
+
+            <article className="progress-stat-card">
+
+              <span>
+                <Icon name="book" />
+                Lessons
+              </span>
+
+              <strong>
+                {lessonsCreated}
+              </strong>
+
+              <p>
+                Adapted
+              </p>
+
+            </article>
+
+            <article className="progress-stat-card">
+
+              <span>
+                <Icon name="check" />
+                Correct
+              </span>
+
+              <strong>
+                {correctAnswers}
+              </strong>
+
+              <p>
+                Answers
+              </p>
+
+            </article>
+
+            <article className="progress-stat-card">
+
+              <span>
+                <Icon name="chart" />
+                Accuracy
+              </span>
+
+              <strong>
+                {accuracy}%
+              </strong>
+
+              <p>
+                {pace} pace
+              </p>
+
+            </article>
+
+          </section>
         </>
       )}
 
@@ -415,19 +564,36 @@ export default function Dashboard() {
             <Icon name="book" />
           </span>
 
-          <small>Learn</small>
+          <small>
+            Learn
+          </small>
         </button>
 
         <button
           onClick={() =>
-            navigate("/upload")
+            recent
+              ? navigate(
+                "/practice",
+                {
+                  state: {
+                    subject:
+                      recent.subject,
+                    adaptedText:
+                      recent.adapted_text ||
+                      "",
+                  },
+                }
+              )
+              : navigate("/upload")
           }
         >
           <span>
             <Icon name="play" />
           </span>
 
-          <small>Practice</small>
+          <small>
+            Practice
+          </small>
         </button>
 
         <button
@@ -439,7 +605,9 @@ export default function Dashboard() {
             <Icon name="file" />
           </span>
 
-          <small>Notes</small>
+          <small>
+            Notes
+          </small>
         </button>
 
         <button
@@ -451,7 +619,9 @@ export default function Dashboard() {
             <Icon name="chart" />
           </span>
 
-          <small>Progress</small>
+          <small>
+            Progress
+          </small>
         </button>
 
       </nav>

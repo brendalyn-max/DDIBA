@@ -12,6 +12,9 @@ from api.views import (
     extract_file,
     voice_chat,
     test_api,
+    generate_flashcards,
+    latest_lesson,
+
 )
 
 
@@ -85,4 +88,15 @@ urlpatterns = [
         "api/",
         include("learn.urls"),
     ),
+    path(
+      "api/flashcards/generate/",
+      generate_flashcards,
+      name="generate_flashcards",
+),
+path(
+    "api/latest-lesson/",
+    latest_lesson,
+    name="latest_lesson",
+),
+
 ]

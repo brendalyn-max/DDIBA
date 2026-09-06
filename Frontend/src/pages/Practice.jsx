@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
 import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
@@ -12,11 +17,23 @@ export default function Practice() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const adaptedText =
-    location.state?.adaptedText || "";
+  const [adaptedText, setAdaptedText] =
+    useState(
+      location.state?.adaptedText ||
+        sessionStorage.getItem(
+          "ddiba_adapted_text"
+        ) ||
+        ""
+    );
 
-  const subject =
-    location.state?.subject || "General";
+  const [subject, setSubject] =
+    useState(
+      location.state?.subject ||
+        sessionStorage.getItem(
+          "ddiba_subject"
+        ) ||
+        "General"
+    );
 
   const [questions, setQuestions] =
     useState([]);
@@ -24,8 +41,10 @@ export default function Practice() {
   const [currentIndex, setCurrentIndex] =
     useState(0);
 
-  const [selectedAnswer, setSelectedAnswer] =
-    useState("");
+  const [
+    selectedAnswer,
+    setSelectedAnswer,
+  ] = useState("");
 
   const [feedback, setFeedback] =
     useState("");
@@ -33,41 +52,86 @@ export default function Practice() {
   const [correct, setCorrect] =
     useState(null);
 
-  const [loadingQuestions, setLoadingQuestions] =
-    useState(true);
+  const [
+    loadingQuestions,
+    setLoadingQuestions,
+  ] = useState(true);
 
-  const [submittingAnswer, setSubmittingAnswer] =
-    useState(false);
+  const [
+    submittingAnswer,
+    setSubmittingAnswer,
+  ] = useState(false);
 
   const [error, setError] =
     useState("");
 
   useEffect(() => {
-    const loadQuestions = async () => {
-      if (!adaptedText) {
-        setError(
-          "No adapted lesson was received. Please create a lesson first."
-        );
-
-        setLoadingQuestions(false);
-        return;
-      }
-
+    const preparePractice = async () => {
       try {
         setLoadingQuestions(true);
         setError("");
 
-        const data = await apiFetch(
-          "/api/practice-questions/",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              adapted_text:
-                adaptedText,
-              subject,
-            }),
-          }
-        );
+        let lessonText =
+          adaptedText;
+
+        let lessonSubject =
+          subject;
+
+        if (!lessonText) {
+          const lesson =
+            await apiFetch(
+              "/api/latest-lesson/"
+            );
+
+          lessonText =
+            lesson.adapted_text ||
+            lesson.original_text ||
+            "";
+
+          lessonSubject =
+            lesson.subject ||
+            "General";
+
+          setAdaptedText(
+            lessonText
+          );
+
+          setSubject(
+            lessonSubject
+          );
+
+          sessionStorage.setItem(
+            "ddiba_adapted_text",
+            lessonText
+          );
+
+          sessionStorage.setItem(
+            "ddiba_subject",
+            lessonSubject
+          );
+        }
+
+        if (!lessonText) {
+          throw new Error(
+            "No saved lesson is available."
+          );
+        }
+
+        const data =
+          await apiFetch(
+            "/api/practice-questions/",
+            {
+              method: "POST",
+
+              body: JSON.stringify({
+                adapted_text:
+                  lessonText,
+
+                subject:
+                  lessonSubject,
+              }),
+            }
+          );
 
         setQuestions(
           data.questions || []
@@ -78,7 +142,7 @@ export default function Practice() {
 
         setError(
           err.message ||
-            "Something went wrong while generating practice questions."
+            "Please create a lesson before starting practice."
         );
 
       } finally {
@@ -86,64 +150,71 @@ export default function Practice() {
       }
     };
 
-    loadQuestions();
-
-  }, [adaptedText, subject]);
+    preparePractice();
+  }, []);
 
   const currentQuestion =
     questions[currentIndex];
 
-  const handleSubmitAnswer = async () => {
-    if (
-      !currentQuestion ||
-      !selectedAnswer.trim()
-    ) {
-      return;
-    }
+  const isMultipleChoice =
+    currentQuestion?.type ===
+      "multiple_choice" &&
+    Array.isArray(
+      currentQuestion?.options
+    );
 
-    try {
-      setSubmittingAnswer(true);
-      setError("");
+  const handleSubmitAnswer =
+    async () => {
+      if (
+        !currentQuestion ||
+        !selectedAnswer.trim()
+      ) {
+        return;
+      }
 
-      const data = await apiFetch(
-        "/api/evaluate-answer/",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            question:
-              currentQuestion.question,
+      try {
+        setSubmittingAnswer(true);
+        setError("");
 
-            student_answer:
-              selectedAnswer,
+        const data =
+          await apiFetch(
+            "/api/evaluate-answer/",
+            {
+              method: "POST",
 
-            reference_answer:
-              currentQuestion.reference_answer,
+              body: JSON.stringify({
+                question:
+                  currentQuestion.question,
 
-            subject,
-          }),
-        }
-      );
+                student_answer:
+                  selectedAnswer,
 
-      setCorrect(
-        data.correct
-      );
+                reference_answer:
+                  currentQuestion.reference_answer,
 
-      setFeedback(
-        data.feedback
-      );
+                subject,
+              }),
+            }
+          );
 
-    } catch (err) {
-      console.error(err);
+        setCorrect(
+          data.correct
+        );
 
-      setError(
-        err.message ||
-          "Something went wrong while evaluating your answer."
-      );
+        setFeedback(
+          data.feedback
+        );
 
-    } finally {
-      setSubmittingAnswer(false);
-    }
-  };
+      } catch (err) {
+        setError(
+          err.message ||
+            "Could not check your answer."
+        );
+
+      } finally {
+        setSubmittingAnswer(false);
+      }
+    };
 
   const handleNextQuestion = () => {
     if (
@@ -163,9 +234,7 @@ export default function Practice() {
       return;
     }
 
-    navigate(
-      "/progress"
-    );
+    navigate("/progress");
   };
 
   const progressPercent =
@@ -179,30 +248,20 @@ export default function Practice() {
     <ResponsiveLayout className="practice-page">
 
       <header className="practice-header">
-
         <div className="practice-brand">
-
           <LogoMark size={39} />
 
           <div>
             <small>Ddiba</small>
             <strong>Practice</strong>
           </div>
-
         </div>
 
         <div className="practice-header-actions">
-
           <span className="practice-streak-pill">
             <Icon name="brain" />
           </span>
-
-          <div className="practice-avatar">
-            L
-          </div>
-
         </div>
-
       </header>
 
       <section className="practice-title-area">
@@ -212,376 +271,220 @@ export default function Practice() {
           onClick={() =>
             navigate("/dashboard")
           }
-          aria-label="Go back"
         >
           <Icon name="arrowLeft" />
         </button>
 
         <div>
-
           <h1>
             {subject} Practice
           </h1>
 
           <p>
-            {questions.length > 0
+            {questions.length
               ? `Question ${
                   currentIndex + 1
-                } of ${questions.length}`
-              : "Preparing questions..."}
+                } of ${
+                  questions.length
+                }`
+              : "Preparing practice..."}
           </p>
-
         </div>
 
         <div className="practice-topic-icon">
-          <Icon name="leaf" />
+          <Icon name="brain" />
         </div>
 
       </section>
 
       {questions.length > 0 && (
+        <section className="practice-progress">
 
-        <div className="practice-progress-track">
+          <div className="practice-progress-top">
+            <span>
+              Question{" "}
+              {currentIndex + 1}
+            </span>
 
-          <div
-            className="practice-progress-fill"
-            style={{
-              width:
-                `${progressPercent}%`,
-            }}
-          />
+            <span>
+              {Math.round(
+                progressPercent
+              )}
+              %
+            </span>
+          </div>
 
-        </div>
+          <div className="practice-progress-track">
+            <div
+              className="practice-progress-fill"
+              style={{
+                width:
+                  `${progressPercent}%`,
+              }}
+            />
+          </div>
 
+        </section>
       )}
 
       {loadingQuestions && (
-
-        <section className="practice-feedback-card success">
-
-          <div className="practice-feedback-top">
-
-            <span>
-              <Icon name="sparkle" />
-              Ddiba is preparing your practice
-            </span>
-
-          </div>
+        <section className="practice-question-card">
+          <h2>
+            Ddiba is preparing your practice
+          </h2>
 
           <p>
-            Generating questions from your adapted lesson...
+            Creating gentle questions from your saved lesson...
           </p>
-
         </section>
-
       )}
 
       {error && (
+        <section className="practice-question-card">
+          <h2>
+            No lesson ready yet
+          </h2>
 
-        <section className="practice-feedback-card try-again">
+          <p>{error}</p>
 
-          <div className="practice-feedback-top">
-
-            <span>
-              <Icon name="lightbulb" />
-              Something needs attention
-            </span>
-
-          </div>
-
-          <p>
-            {error}
-          </p>
-
+          <button
+            className="practice-submit-btn"
+            onClick={() =>
+              navigate("/upload")
+            }
+          >
+            Create Lesson
+            <Icon name="arrowRight" />
+          </button>
         </section>
-
       )}
 
       {!loadingQuestions &&
+        !error &&
         currentQuestion && (
           <>
+            <section className="practice-question-card">
 
-            <section className="practice-question-meta">
-
-              <span className="practice-concept-pill">
-                <Icon name="help" />
-                Concept Check
+              <span className="practice-question-label">
+                <Icon name="sparkle" />
+                Think it through
               </span>
-
-              <span>
-                {currentQuestion.type ===
-                "multiple_choice"
-                  ? "Multiple Choice"
-                  : "Free Text"}
-              </span>
-
-            </section>
-
-            <section className="practice-question">
 
               <h2>
                 {currentQuestion.question}
               </h2>
 
-              <div className="practice-image-card">
+              {isMultipleChoice ? (
+                <div className="practice-options">
 
-                <div className="practice-image-placeholder">
-                  <Icon name="leaf" />
-                </div>
-
-                <span>
-                  Adaptive practice
-                </span>
-
-              </div>
-
-            </section>
-
-            {currentQuestion.type ===
-            "multiple_choice" ? (
-
-              <section className="practice-answers">
-
-                {currentQuestion.options?.map(
-                  (answer, index) => {
-
-                    const isSelected =
-                      selectedAnswer ===
-                      answer;
-
-                    let stateClass = "";
-
-                    if (
-                      feedback &&
-                      isSelected
-                    ) {
-                      stateClass =
-                        correct
-                          ? "correct"
-                          : "wrong";
-                    }
-
-                    return (
+                  {currentQuestion.options.map(
+                    (
+                      option,
+                      index
+                    ) => (
                       <button
+                        key={`${option}-${index}`}
                         type="button"
-                        key={`${answer}-${index}`}
-                        className={`practice-answer ${stateClass}`}
-                        onClick={() => {
-                          if (!feedback) {
-                            setSelectedAnswer(
-                              answer
-                            );
-                          }
-                        }}
+                        className={
+                          selectedAnswer ===
+                          option
+                            ? "selected"
+                            : ""
+                        }
+                        disabled={
+                          correct !== null
+                        }
+                        onClick={() =>
+                          setSelectedAnswer(
+                            option
+                          )
+                        }
                       >
-
-                        <div className="practice-answer-letter">
+                        <span>
                           {String.fromCharCode(
                             65 + index
                           )}
-                        </div>
+                        </span>
 
-                        <div className="practice-answer-copy">
-
-                          <strong>
-                            {answer}
-                          </strong>
-
-                          {isSelected && (
-                            <small>
-                              Your selected answer
-                            </small>
-                          )}
-
-                        </div>
-
-                        <div
-                          className={`practice-answer-radio ${
-                            isSelected
-                              ? "selected"
-                              : ""
-                          }`}
-                        >
-                          {isSelected
-                            ? "✓"
-                            : ""}
-                        </div>
-
+                        {option}
                       </button>
-                    );
-                  }
-                )}
+                    )
+                  )}
 
-              </section>
-
-            ) : (
-
-              <section className="practice-free-text-card">
-
+                </div>
+              ) : (
                 <textarea
-                  value={selectedAnswer}
+                  value={
+                    selectedAnswer
+                  }
                   onChange={(event) =>
                     setSelectedAnswer(
                       event.target.value
                     )
                   }
-                  placeholder="Type your answer in your own words..."
                   disabled={
-                    Boolean(feedback)
+                    correct !== null
                   }
+                  placeholder="Write your answer in your own words..."
                 />
+              )}
 
-              </section>
+            </section>
 
-            )}
-
-            {!feedback && (
-
+            {correct === null ? (
               <button
-                className="practice-finish-btn"
+                className="practice-submit-btn"
                 onClick={
                   handleSubmitAnswer
                 }
                 disabled={
-                  !selectedAnswer.trim() ||
-                  submittingAnswer
+                  submittingAnswer ||
+                  !selectedAnswer.trim()
                 }
               >
-
                 {submittingAnswer
-                  ? "Ddiba is checking your answer..."
-                  : (
-                    <>
-                      Check Answer
-                      <Icon name="arrowRight" />
-                    </>
-                  )}
+                  ? "Checking..."
+                  : "Check Answer"}
 
+                <Icon name="arrowRight" />
               </button>
-
-            )}
-
-            {feedback && (
-
+            ) : (
               <>
-
                 <section
                   className={`practice-feedback-card ${
                     correct
-                      ? "success"
-                      : "try-again"
+                      ? "correct"
+                      : "incorrect"
                   }`}
                 >
-
-                  <div className="practice-feedback-top">
-
-                    <span>
-
-                      {correct ? (
-                        <>
-                          <Icon name="sparkle" />
-                          Nice work!
-                        </>
-                      ) : (
-                        <>
-                          <Icon name="lightbulb" />
-                          Keep going!
-                        </>
-                      )}
-
-                    </span>
-
-                    {correct && (
-                      <span className="xp-pill">
-                        +25 XP
-                      </span>
-                    )}
-
-                  </div>
+                  <strong>
+                    {correct
+                      ? "Nice work!"
+                      : "Almost there"}
+                  </strong>
 
                   <p>
                     {feedback}
                   </p>
-
                 </section>
 
                 <button
-                  className="practice-finish-btn"
+                  className="practice-submit-btn"
                   onClick={
                     handleNextQuestion
                   }
                 >
-
                   {currentIndex <
-                  questions.length - 1 ? (
-                    <>
-                      Next Question
-                      <Icon name="arrowRight" />
-                    </>
-                  ) : (
-                    <>
-                      Finish Session
-                      <Icon name="arrowRight" />
-                    </>
-                  )}
+                  questions.length - 1
+                    ? "Next Question"
+                    : "View Progress"}
 
+                  <Icon name="arrowRight" />
                 </button>
-
               </>
-
             )}
-
           </>
         )}
-
-      <nav className="practice-bottom-nav">
-
-        <button
-          onClick={() =>
-            navigate("/dashboard")
-          }
-        >
-          <span>
-            <Icon name="book" />
-          </span>
-          <small>Learn</small>
-        </button>
-
-        <button
-          className="active"
-          onClick={() =>
-            navigate("/upload")
-          }
-        >
-          <span>
-            <Icon name="play" />
-          </span>
-          <small>Practice</small>
-        </button>
-
-        <button
-          onClick={() =>
-            navigate("/upload")
-          }
-        >
-          <span>
-            <Icon name="file" />
-          </span>
-          <small>Notes</small>
-        </button>
-
-        <button
-          onClick={() =>
-            navigate("/progress")
-          }
-        >
-          <span>
-            <Icon name="chart" />
-          </span>
-          <small>Progress</small>
-        </button>
-
-      </nav>
 
     </ResponsiveLayout>
   );

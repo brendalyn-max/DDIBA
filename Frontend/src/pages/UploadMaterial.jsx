@@ -450,26 +450,26 @@ export default function UploadMaterial() {
       );
 
       navigate("/lesson", {
-        state: {
-          originalText: material,
+  state: {
+    originalText: material,
 
-          simplifiedText:
-            data.simplified_text,
+    simplifiedText:
+      data.simplified_text,
 
-          keyPoints:
-            data.key_points,
+    keyPoints:
+      data.key_points,
 
-          subject:
-            data.subject ||
-            subject,
+    subject:
+      data.subject ||
+      subject,
 
-          preferences:
-            profile,
+    preferences:
+      profile,
 
-          materialId:
-            data.material_id,
-        },
-      });
+    materialId:
+      data.material_id,
+  },
+});
     } catch (err) {
       console.error(err);
 

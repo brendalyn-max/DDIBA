@@ -685,3 +685,164 @@ Requirements:
         )
 
     return image_base64
+
+def generate_flashcards_with_ai(
+    lesson_text,
+    subject="General",
+    preferences=None,
+):
+    preferences = preferences or {}
+
+    preference_lines = []
+
+    if preferences.get("short_explanations"):
+        preference_lines.append(
+            "- Keep card answers short and focused."
+        )
+
+    if preferences.get("step_by_step"):
+        preference_lines.append(
+            "- Prefer clear cause-and-effect wording."
+        )
+
+    if preferences.get("examples"):
+        preference_lines.append(
+            "- Include simple examples when useful."
+        )
+
+    pace = preferences.get(
+        "pace",
+        "gentle",
+    )
+
+    preference_text = "\n".join(
+        preference_lines
+    )
+
+    prompt = f"""
+You are Ddiba, an adaptive learning assistant.
+
+Create study flashcards from the lesson below.
+
+Subject:
+{subject}
+
+Learner preferences:
+{preference_text}
+- Learning pace: {pace}
+
+Requirements:
+- Create exactly 10 flashcards.
+- Focus on the most important concepts.
+- Each card must contain one clear question and one clear answer.
+- Keep questions concise.
+- Keep answers easy to understand.
+- Avoid duplicate cards.
+- Do not invent facts outside the lesson.
+- Include definitions, relationships, processes, and key ideas where relevant.
+- Prefer understanding over memorizing isolated wording.
+- Make the cards suitable for later spaced repetition.
+
+Return ONLY valid JSON in this exact structure:
+
+{{
+  "flashcards": [
+    {{
+      "front": "Question or prompt",
+      "back": "Correct answer"
+    }}
+  ]
+}}
+
+Lesson:
+{lesson_text}
+"""
+
+    raw_response = _call_llm(
+        [
+            {
+                "role": "system",
+                "content": (
+                    "You are Ddiba, a calm and accurate "
+                    "adaptive learning assistant."
+                ),
+            },
+            {
+                "role": "user",
+                "content": prompt,
+            },
+        ]
+    )
+
+    try:
+        result = json.loads(
+            raw_response
+        )
+    except json.JSONDecodeError as exc:
+        raise LLMServiceError(
+            "The AI flashcard response was not valid JSON."
+        ) from exc
+
+    if "flashcards" not in result:
+        raise LLMServiceError(
+            "The AI response did not contain flashcards."
+        )
+
+    flashcards = result[
+        "flashcards"
+    ]
+
+    if not isinstance(
+        flashcards,
+        list,
+    ):
+        raise LLMServiceError(
+            "The flashcards field must be a list."
+        )
+
+    cleaned_cards = []
+
+    for card in flashcards:
+        if not isinstance(
+            card,
+            dict,
+        ):
+            continue
+
+        front = (
+            str(
+                card.get(
+                    "front",
+                    "",
+                )
+            )
+            .strip()
+        )
+
+        back = (
+            str(
+                card.get(
+                    "back",
+                    "",
+                )
+            )
+            .strip()
+        )
+
+        if front and back:
+            cleaned_cards.append(
+                {
+                    "front": front,
+                    "back": back,
+                }
+            )
+
+    if not cleaned_cards:
+        raise LLMServiceError(
+            "Ddiba could not generate usable flashcards."
+        )
+
+    return {
+        "flashcards":
+            cleaned_cards[:10]
+    }
