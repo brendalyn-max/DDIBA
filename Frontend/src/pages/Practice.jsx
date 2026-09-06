@@ -6,8 +6,7 @@ import {
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import { apiFetch } from "../services/api";
 
 export default function Practice() {
   const navigate = useNavigate();
@@ -19,14 +18,20 @@ export default function Practice() {
   const subject =
     location.state?.subject || "General";
 
-  const [questions, setQuestions] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [questions, setQuestions] =
+    useState([]);
+
+  const [currentIndex, setCurrentIndex] =
+    useState(0);
 
   const [selectedAnswer, setSelectedAnswer] =
     useState("");
 
-  const [feedback, setFeedback] = useState("");
-  const [correct, setCorrect] = useState(null);
+  const [feedback, setFeedback] =
+    useState("");
+
+  const [correct, setCorrect] =
+    useState(null);
 
   const [loadingQuestions, setLoadingQuestions] =
     useState(true);
@@ -34,7 +39,8 @@ export default function Practice() {
   const [submittingAnswer, setSubmittingAnswer] =
     useState(false);
 
-  const [error, setError] = useState("");
+  const [error, setError] =
+    useState("");
 
   useEffect(() => {
     const loadQuestions = async () => {
@@ -51,31 +57,22 @@ export default function Practice() {
         setLoadingQuestions(true);
         setError("");
 
-        const response = await fetch(
-          `${API_BASE_URL}/api/practice-questions/`,
+        const data = await apiFetch(
+          "/api/practice-questions/",
           {
             method: "POST",
-
-            headers: {
-              "Content-Type": "application/json",
-            },
-
             body: JSON.stringify({
-              adapted_text: adaptedText,
+              adapted_text:
+                adaptedText,
+              subject,
             }),
           }
         );
 
-        const data = await response.json();
+        setQuestions(
+          data.questions || []
+        );
 
-        if (!response.ok) {
-          throw new Error(
-            data.detail ||
-              "Could not generate practice questions."
-          );
-        }
-
-        setQuestions(data.questions || []);
       } catch (err) {
         console.error(err);
 
@@ -83,13 +80,15 @@ export default function Practice() {
           err.message ||
             "Something went wrong while generating practice questions."
         );
+
       } finally {
         setLoadingQuestions(false);
       }
     };
 
     loadQuestions();
-  }, [adaptedText]);
+
+  }, [adaptedText, subject]);
 
   const currentQuestion =
     questions[currentIndex];
@@ -106,15 +105,10 @@ export default function Practice() {
       setSubmittingAnswer(true);
       setError("");
 
-      const response = await fetch(
-        `${API_BASE_URL}/api/evaluate-answer/`,
+      const data = await apiFetch(
+        "/api/evaluate-answer/",
         {
           method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
           body: JSON.stringify({
             question:
               currentQuestion.question,
@@ -124,21 +118,20 @@ export default function Practice() {
 
             reference_answer:
               currentQuestion.reference_answer,
+
+            subject,
           }),
         }
       );
 
-      const data = await response.json();
+      setCorrect(
+        data.correct
+      );
 
-      if (!response.ok) {
-        throw new Error(
-          data.detail ||
-            "Could not evaluate your answer."
-        );
-      }
+      setFeedback(
+        data.feedback
+      );
 
-      setCorrect(data.correct);
-      setFeedback(data.feedback);
     } catch (err) {
       console.error(err);
 
@@ -146,6 +139,7 @@ export default function Practice() {
         err.message ||
           "Something went wrong while evaluating your answer."
       );
+
     } finally {
       setSubmittingAnswer(false);
     }
@@ -157,7 +151,8 @@ export default function Practice() {
       questions.length - 1
     ) {
       setCurrentIndex(
-        (current) => current + 1
+        (current) =>
+          current + 1
       );
 
       setSelectedAnswer("");
@@ -168,13 +163,9 @@ export default function Practice() {
       return;
     }
 
-    navigate("/progress", {
-      state: {
-        questionsAnswered:
-          questions.length,
-        subject,
-      },
-    });
+    navigate(
+      "/progress"
+    );
   };
 
   const progressPercent =
@@ -203,11 +194,11 @@ export default function Practice() {
         <div className="practice-header-actions">
 
           <span className="practice-streak-pill">
-            <Icon name="flame" /> 5
+            <Icon name="brain" />
           </span>
 
           <div className="practice-avatar">
-            S
+            L
           </div>
 
         </div>
@@ -219,7 +210,7 @@ export default function Practice() {
         <button
           className="practice-back-btn"
           onClick={() =>
-            navigate("/lesson")
+            navigate("/dashboard")
           }
           aria-label="Go back"
         >
@@ -236,9 +227,7 @@ export default function Practice() {
             {questions.length > 0
               ? `Question ${
                   currentIndex + 1
-                } of ${
-                  questions.length
-                }`
+                } of ${questions.length}`
               : "Preparing questions..."}
           </p>
 
@@ -257,7 +246,8 @@ export default function Practice() {
           <div
             className="practice-progress-fill"
             style={{
-              width: `${progressPercent}%`,
+              width:
+                `${progressPercent}%`,
             }}
           />
 
@@ -299,7 +289,9 @@ export default function Practice() {
 
           </div>
 
-          <p>{error}</p>
+          <p>
+            {error}
+          </p>
 
         </section>
 
@@ -363,9 +355,10 @@ export default function Practice() {
                       feedback &&
                       isSelected
                     ) {
-                      stateClass = correct
-                        ? "correct"
-                        : "wrong";
+                      stateClass =
+                        correct
+                          ? "correct"
+                          : "wrong";
                     }
 
                     return (
@@ -551,20 +544,18 @@ export default function Practice() {
           <span>
             <Icon name="book" />
           </span>
-
           <small>Learn</small>
         </button>
 
         <button
           className="active"
           onClick={() =>
-            navigate("/practice")
+            navigate("/upload")
           }
         >
           <span>
             <Icon name="play" />
           </span>
-
           <small>Practice</small>
         </button>
 
@@ -576,7 +567,6 @@ export default function Practice() {
           <span>
             <Icon name="file" />
           </span>
-
           <small>Notes</small>
         </button>
 
@@ -588,7 +578,6 @@ export default function Practice() {
           <span>
             <Icon name="chart" />
           </span>
-
           <small>Progress</small>
         </button>
 

@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import { apiFetch } from "../services/api";
 
 const supportOptions = [
   {
@@ -69,40 +68,25 @@ export default function ReadingSupport() {
       setSaving(true);
       setError("");
 
-      const response = await fetch(
-        `${API_BASE_URL}/api/profile/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            larger_text:
-              enabled.includes("largerText"),
+      await apiFetch("/api/profile/", {
+        method: "PATCH",
+        body: JSON.stringify({
+          larger_text:
+            enabled.includes("largerText"),
 
-            more_spacing:
-              enabled.includes("spacing"),
+          more_spacing:
+            enabled.includes("spacing"),
 
-            shorter_paragraphs:
-              enabled.includes("shortParagraphs"),
+          shorter_paragraphs:
+            enabled.includes("shortParagraphs"),
 
-            highlight_words:
-              enabled.includes("highlight"),
+          highlight_words:
+            enabled.includes("highlight"),
 
-            read_aloud:
-              enabled.includes("readAloud"),
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.detail ||
-            "Could not save your reading preferences."
-        );
-      }
+          read_aloud:
+            enabled.includes("readAloud"),
+        }),
+      });
 
       navigate("/onboarding/profile");
 

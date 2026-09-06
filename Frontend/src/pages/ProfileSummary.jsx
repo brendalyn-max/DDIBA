@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import {
+  apiFetch,
+  getUsername,
+} from "../services/api";
 
 export default function ProfileSummary() {
   const navigate = useNavigate();
@@ -13,24 +15,17 @@ export default function ProfileSummary() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const username = getUsername() || "Learner";
+
   useEffect(() => {
     const loadProfile = async () => {
       try {
         setLoading(true);
         setError("");
 
-        const response = await fetch(
-          `${API_BASE_URL}/api/profile/`
+        const data = await apiFetch(
+          "/api/profile/"
         );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(
-            data.detail ||
-              "Could not load your learning profile."
-          );
-        }
 
         setProfile(data);
 
@@ -39,7 +34,7 @@ export default function ProfileSummary() {
 
         setError(
           err.message ||
-            "Something went wrong while loading your profile."
+            "Unable to load your learning profile."
         );
 
       } finally {
@@ -50,51 +45,62 @@ export default function ProfileSummary() {
     loadProfile();
   }, []);
 
-  const accommodations = useMemo(() => {
-    if (!profile) {
-      return [];
-    }
+  const accommodations = [];
 
-    const items = [];
+  if (profile?.short_explanations) {
+    accommodations.push(
+      "Short explanations"
+    );
+  }
 
-    if (profile.short_explanations) {
-      items.push("Short explanations");
-    }
+  if (profile?.step_by_step) {
+    accommodations.push(
+      "Step-by-step guidance"
+    );
+  }
 
-    if (profile.step_by_step) {
-      items.push("Step-by-step guidance");
-    }
+  if (profile?.examples) {
+    accommodations.push(
+      "Real-world examples"
+    );
+  }
 
-    if (profile.examples) {
-      items.push("Real-world examples");
-    }
+  if (profile?.read_aloud) {
+    accommodations.push(
+      "Read aloud enabled"
+    );
+  }
 
-    if (profile.larger_text) {
-      items.push("Larger text");
-    }
+  if (profile?.larger_text) {
+    accommodations.push(
+      "Larger text"
+    );
+  }
 
-    if (profile.more_spacing) {
-      items.push("Relaxed spacing");
-    }
+  if (profile?.more_spacing) {
+    accommodations.push(
+      "Relaxed spacing"
+    );
+  }
 
-    if (profile.shorter_paragraphs) {
-      items.push("Shorter paragraphs");
-    }
+  if (profile?.shorter_paragraphs) {
+    accommodations.push(
+      "Shorter paragraphs"
+    );
+  }
 
-    if (profile.highlight_words) {
-      items.push("Highlighted key words");
-    }
+  if (profile?.highlight_words) {
+    accommodations.push(
+      "Highlighted key words"
+    );
+  }
 
-    if (profile.read_aloud) {
-      items.push("Read aloud enabled");
-    }
+  const displayName =
+    username.charAt(0).toUpperCase() +
+    username.slice(1);
 
-    if (profile.pace) {
-      items.push(`${profile.pace} pace`);
-    }
-
-    return items;
-  }, [profile]);
+  const initial =
+    displayName.charAt(0).toUpperCase();
 
   return (
     <ResponsiveLayout className="profile-summary-page">
@@ -104,7 +110,9 @@ export default function ProfileSummary() {
         <button
           className="onboarding-back-btn"
           onClick={() =>
-            navigate("/onboarding/reading-support")
+            navigate(
+              "/onboarding/reading-support"
+            )
           }
           aria-label="Go back"
         >
@@ -117,7 +125,7 @@ export default function ProfileSummary() {
         </div>
 
         <div className="onboarding-avatar">
-          S
+          {initial}
         </div>
 
       </header>
@@ -125,12 +133,16 @@ export default function ProfileSummary() {
       <section className="profile-progress">
 
         <div className="profile-progress-top">
-          <span>✓ STEP 4 OF 4 • COMPLETE!</span>
+          <span>
+            ✓ STEP 4 OF 4 • COMPLETE!
+          </span>
+
           <span>100% Complete</span>
         </div>
 
         <div className="profile-progress-track">
-          <div className="profile-progress-fill"></div>
+          <div className="profile-progress-fill">
+          </div>
         </div>
 
       </section>
@@ -140,111 +152,115 @@ export default function ProfileSummary() {
         <h1>Your learning style</h1>
 
         <p>
-          Here is how Ddiba is calibrated for you.
+          Here is how Ddiba is calibrated
+          for you.
           <br />
-          Your saved preferences are ready to use.
+
+          Tailored for{" "}
+          <strong>{displayName}.</strong>
         </p>
 
       </section>
 
-      <section className="learner-profile-card">
-
-        <div className="learner-avatar">
-          S
-        </div>
-
-        <div className="learner-profile-copy">
-
-          <h3>Your Ddiba Profile</h3>
-
-          <p>
-            {profile?.pace
-              ? `${profile.pace} learning pace`
-              : "Personalized learner"}
-          </p>
-
-          <span className="profile-ready-pill">
-            ● Calibrated & Ready
-          </span>
-
-        </div>
-
-      </section>
-
       {loading && (
-        <section className="ddiba-promise-card">
-          <div className="promise-icon">
-            <Icon name="sparkle" />
-          </div>
-
-          <div className="promise-copy">
-            <h3>Loading your profile...</h3>
-
-            <p>
-              Ddiba is preparing your saved learning preferences.
-            </p>
-          </div>
-        </section>
+        <p
+          style={{
+            textAlign: "center",
+            margin: "20px 0",
+          }}
+        >
+          Loading your learning profile...
+        </p>
       )}
 
       {error && (
-        <section className="ddiba-promise-card">
-
-          <div className="promise-icon">
-            <Icon name="help" />
-          </div>
-
-          <div className="promise-copy">
-
-            <h3>Profile could not load</h3>
-
-            <p>{error}</p>
-
-          </div>
-
-        </section>
+        <div
+          style={{
+            margin: "16px 0",
+            padding: "12px",
+            borderRadius: "12px",
+            background: "#fff0f2",
+            color: "#a2394a",
+            fontSize: "12px",
+          }}
+        >
+          {error}
+        </div>
       )}
 
-      {!loading && !error && profile && (
-        <section className="accommodations-card">
+      {!loading && !error && (
+        <>
+          <section className="learner-profile-card">
 
-          <div className="accommodations-heading">
+            <div className="learner-avatar">
+              {initial}
+            </div>
 
-            <h3>
-              <Icon name="list" /> Active Accommodations
-            </h3>
+            <div className="learner-profile-copy">
 
-            <span>
-              {accommodations.length} applied
-            </span>
+              <h3>
+                {displayName}'s Profile
+              </h3>
 
-          </div>
+              <p>
+                {profile?.pace === "gentle"
+                  ? "Gentle-paced learner"
+                  : `${
+                      profile?.pace ||
+                      "Personalized"
+                    } learner`}
+              </p>
 
-          <p className="accommodations-description">
-            Customized interaction layers to keep
-            explanations clear, low-stress, and engaging.
-          </p>
-
-          <div className="accommodation-chips">
-
-            {accommodations.length > 0 ? (
-              accommodations.map((item) => (
-                <span
-                  key={item}
-                  className="accommodation-chip"
-                >
-                  ✓ {item}
-                </span>
-              ))
-            ) : (
-              <span className="accommodation-chip">
-                ✓ Default learning settings
+              <span className="profile-ready-pill">
+                ● Calibrated & Ready
               </span>
-            )}
 
-          </div>
+            </div>
 
-        </section>
+          </section>
+
+          <section className="accommodations-card">
+
+            <div className="accommodations-heading">
+
+              <h3>
+                <Icon name="list" />{" "}
+                Active Accommodations
+              </h3>
+
+              <span>
+                {accommodations.length} applied
+              </span>
+
+            </div>
+
+            <p className="accommodations-description">
+              Customized interaction layers to
+              keep explanations clear, low-stress,
+              and engaging.
+            </p>
+
+            <div className="accommodation-chips">
+
+              {accommodations.length > 0 ? (
+                accommodations.map((item) => (
+                  <span
+                    key={item}
+                    className="accommodation-chip"
+                  >
+                    ✓ {item}
+                  </span>
+                ))
+              ) : (
+                <span className="accommodation-chip">
+                  Personalized learning
+                </span>
+              )}
+
+            </div>
+
+          </section>
+        </>
       )}
 
       <section className="ddiba-promise-card">
@@ -268,10 +284,13 @@ export default function ProfileSummary() {
 
       <button
         className="profile-start-btn"
-        onClick={() => navigate("/dashboard")}
+        onClick={() =>
+          navigate("/dashboard")
+        }
         disabled={loading}
       >
-        Start Learning <Icon name="arrowRight" />
+        Start Learning{" "}
+        <Icon name="arrowRight" />
       </button>
 
     </ResponsiveLayout>

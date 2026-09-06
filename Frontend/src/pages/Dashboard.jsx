@@ -1,213 +1,461 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
+import { apiFetch } from "../services/api";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const days = ["M", "T", "W", "T", "F", "S", "S"];
+  const [dashboard, setDashboard] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadDashboard = async () => {
+      try {
+        setLoading(true);
+        setError("");
+
+        const data = await apiFetch(
+          "/api/dashboard/"
+        );
+
+        setDashboard(data);
+      } catch (err) {
+        console.error(err);
+
+        setError(
+          err.message ||
+            "Could not load your dashboard."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDashboard();
+  }, []);
+
+  const learnerName =
+    dashboard?.learner_name || "Learner";
+
+  const initial =
+    learnerName.charAt(0).toUpperCase();
+
+  const accuracy =
+    dashboard?.accuracy ?? 0;
+
+  const questionsAnswered =
+    dashboard?.questions_answered ?? 0;
+
+  const correctAnswers =
+    dashboard?.correct_answers ?? 0;
+
+  const lessonsCreated =
+    dashboard?.lessons_created ?? 0;
+
+  const recent =
+    dashboard?.recent_learning;
 
   return (
     <ResponsiveLayout className="dashboard-page">
+
       <header className="dashboard-header">
+
         <div className="dashboard-brand">
+
           <LogoMark size={39} />
 
           <div className="dashboard-brand-copy">
             <small>Ddiba</small>
             <strong>Dashboard</strong>
           </div>
+
         </div>
 
         <div className="dashboard-header-actions">
-          <span className="header-streak-pill"><Icon name="flame" /> 5</span>
-          <div className="dashboard-avatar">S</div>
+
+          <span className="header-streak-pill">
+            <Icon name="brain" /> {questionsAnswered}
+          </span>
+
+          <div className="dashboard-avatar">
+            {initial}
+          </div>
+
         </div>
+
       </header>
 
       <section className="dashboard-greeting">
+
         <div>
-          <h1>Hi, Sarah 👋</h1>
+
+          <h1>
+            Hi, {learnerName} 👋
+          </h1>
 
           <p>
             Ready to learn something joyful today?
           </p>
+
         </div>
 
         <div className="dashboard-profile-picture">
-          <span>S</span>
+
+          <span>{initial}</span>
           <i></i>
+
         </div>
+
       </section>
 
-      <section className="dashboard-streak-card">
-        <div className="dashboard-streak-heading">
-          <div className="dashboard-streak-icon">
-            <Icon name="flame" />
+      {loading && (
+        <section className="dashboard-streak-card">
+          <p>Loading your learning progress...</p>
+        </section>
+      )}
+
+      {error && (
+        <section className="dashboard-streak-card">
+          <p>{error}</p>
+        </section>
+      )}
+
+      {!loading && !error && (
+        <>
+          <section className="dashboard-streak-card">
+
+            <div className="dashboard-streak-heading">
+
+              <div className="dashboard-streak-icon">
+                <Icon name="chart" />
+              </div>
+
+              <div>
+
+                <div className="dashboard-streak-title-row">
+
+                  <h2>
+                    {accuracy}% Understanding
+                  </h2>
+
+                  <span>
+                    {dashboard?.pace || "gentle"} pace
+                  </span>
+
+                </div>
+
+                <p>
+                  {questionsAnswered} practice questions completed.
+                  <br />
+                  Keep building your confidence.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div
+              style={{
+                marginTop: "18px",
+                display: "grid",
+                gridTemplateColumns:
+                  "repeat(3, minmax(0, 1fr))",
+                gap: "10px",
+              }}
+            >
+
+              <article className="progress-stat-card">
+
+                <span>
+                  <Icon name="book" /> Lessons
+                </span>
+
+                <strong>
+                  {lessonsCreated}
+                </strong>
+
+                <p>
+                  Adapted lessons
+                </p>
+
+              </article>
+
+              <article className="progress-stat-card">
+
+                <span>
+                  <Icon name="check" /> Correct
+                </span>
+
+                <strong>
+                  {correctAnswers}
+                </strong>
+
+                <p>
+                  Correct answers
+                </p>
+
+              </article>
+
+              <article className="progress-stat-card">
+
+                <span>
+                  <Icon name="chart" /> Accuracy
+                </span>
+
+                <strong>
+                  {accuracy}%
+                </strong>
+
+                <p>
+                  Understanding
+                </p>
+
+              </article>
+
+            </div>
+
+          </section>
+
+          <div className="dashboard-section-heading">
+
+            <h3>Core Modes</h3>
+
+            <span>
+              Personalized for {learnerName}
+            </span>
+
           </div>
 
-          <div>
-            <div className="dashboard-streak-title-row">
-              <h2>4 Day Streak!</h2>
+          <section className="dashboard-mode-card understand-card">
 
-              <span>Steady pace</span>
+            <div className="dashboard-mode-top">
+
+              <div className="dashboard-mode-icon purple">
+                <Icon name="sparkle" />
+              </div>
+
+              <span className="dashboard-mode-pill purple-pill">
+                AI Explanations
+              </span>
+
             </div>
+
+            <h2>
+              Understand <Icon name="sparkle" />
+            </h2>
 
             <p>
-              You're building steady momentum.
-              <br />
-              Keep it up!
+              Break down tough concepts into simple,
+              friendly ideas & intuitive analogies.
             </p>
-          </div>
-        </div>
 
-        <div className="dashboard-week">
-          {days.map((day, index) => (
-            <div
-              className="dashboard-day"
-              key={`${day}-${index}`}
+            <button
+              className="dashboard-mode-btn primary"
+              onClick={() =>
+                navigate("/upload")
+              }
             >
-              <span>{day}</span>
+              Explore Topic{" "}
+              <Icon name="arrowRight" />
+            </button>
 
-              <div
-                className={`dashboard-day-circle ${
-                  index < 4 ? "active" : ""
-                }`}
-              >
-                {index < 4 ? <Icon name="flame" /> : "•"}
+          </section>
+
+          <section className="dashboard-mode-card practice-card">
+
+            <div className="dashboard-mode-top">
+
+              <div className="dashboard-mode-icon green">
+                <Icon name="brain" />
               </div>
+
+              <span className="dashboard-mode-pill green-pill">
+                AI Practice
+              </span>
+
             </div>
-          ))}
-        </div>
-      </section>
 
-      <div className="dashboard-section-heading">
-        <h3>Core Modes</h3>
-        <span>Personalized for you</span>
-      </div>
+            <h2>
+              Practice <Icon name="brain" />
+            </h2>
 
-      <section className="dashboard-mode-card understand-card">
-        <div className="dashboard-mode-top">
-          <div className="dashboard-mode-icon purple">
-            <Icon name="sparkle" />
+            <p>
+              Test your understanding with gentle,
+              supportive questions generated from
+              your own lesson.
+            </p>
+
+            <button
+              className="dashboard-mode-btn green"
+              onClick={() =>
+                navigate("/upload")
+              }
+            >
+              Start from a lesson ⚡
+            </button>
+
+          </section>
+
+          <div className="dashboard-section-heading">
+
+            <h3>Continue Learning</h3>
+
+            <button
+              type="button"
+              onClick={() =>
+                navigate("/progress")
+              }
+            >
+              View all
+            </button>
+
           </div>
 
-          <span className="dashboard-mode-pill purple-pill">
-            AI Explanations
-          </span>
-        </div>
+          {recent ? (
 
-        <h2>Understand <Icon name="sparkle" /></h2>
+            <section className="dashboard-continue-card">
 
-        <p>
-          Break down tough concepts into simple,
-          friendly ideas & intuitive analogies.
-        </p>
+              <div className="dashboard-topic-icon">
+                <Icon name="book" />
+              </div>
 
-        <button
-          className="dashboard-mode-btn primary"
-          onClick={() => navigate("/upload")}
-        >
-          Explore Topic <Icon name="arrowRight" />
-        </button>
-      </section>
+              <div className="dashboard-topic-copy">
 
-      <section className="dashboard-mode-card practice-card">
-        <div className="dashboard-mode-top">
-          <div className="dashboard-mode-icon green">
-            <Icon name="brain" />
-          </div>
+                <span>
+                  {recent.subject}
+                </span>
 
-          <span className="dashboard-mode-pill green-pill">
-            Zero-Stress
-          </span>
-        </div>
+                <h3>
+                  {recent.title}
+                </h3>
 
-        <h2>Practice <Icon name="brain" /></h2>
+                <p>
+                  Your most recently adapted lesson
+                </p>
 
-        <p>
-          Test your understanding with gentle,
-          supportive quizzes that adapt to your pace.
-        </p>
+                <div className="dashboard-topic-progress">
 
-        <button
-          className="dashboard-mode-btn green"
-          onClick={() => navigate("/practice")}
-        >
-          Quick Quiz ⚡
-        </button>
-      </section>
+                  <div
+                    style={{
+                      width: `${Math.max(
+                        10,
+                        accuracy
+                      )}%`,
+                    }}
+                  />
 
-      <div className="dashboard-section-heading">
-        <h3>Continue Learning</h3>
+                </div>
 
-        <button
-          type="button"
-          onClick={() => navigate("/progress")}
-        >
-          View all
-        </button>
-      </div>
+              </div>
 
-      <section className="dashboard-continue-card">
-        <div className="dashboard-topic-icon">
-          <Icon name="leaf" />
-        </div>
+              <button
+                className="dashboard-topic-arrow"
+                onClick={() =>
+                  navigate("/upload")
+                }
+              >
+                <Icon name="arrowRight" />
+              </button>
 
-        <div className="dashboard-topic-copy">
-          <span>Biology</span>
+            </section>
 
-          <h3>Light Reactions</h3>
+          ) : (
 
-          <p>
-            Last studied 12 mins ago
-          </p>
+            <section className="dashboard-continue-card">
 
-          <div className="dashboard-topic-progress">
-            <div></div>
-          </div>
-        </div>
+              <div className="dashboard-topic-icon">
+                <Icon name="sparkle" />
+              </div>
 
-        <button
-          className="dashboard-topic-arrow"
-          onClick={() => navigate("/upload")}
-        >
-          <Icon name="arrowRight" />
-        </button>
-      </section>
+              <div className="dashboard-topic-copy">
+
+                <span>
+                  Start learning
+                </span>
+
+                <h3>
+                  No lessons yet
+                </h3>
+
+                <p>
+                  Adapt your first lesson with Ddiba.
+                </p>
+
+              </div>
+
+              <button
+                className="dashboard-topic-arrow"
+                onClick={() =>
+                  navigate("/upload")
+                }
+              >
+                <Icon name="arrowRight" />
+              </button>
+
+            </section>
+
+          )}
+
+        </>
+      )}
 
       <nav className="dashboard-bottom-nav">
+
         <button
           className="active"
-          onClick={() => navigate("/dashboard")}
+          onClick={() =>
+            navigate("/dashboard")
+          }
         >
-          <span><Icon name="book" /></span>
+          <span>
+            <Icon name="book" />
+          </span>
+
           <small>Learn</small>
         </button>
 
         <button
-          onClick={() => navigate("/practice")}
+          onClick={() =>
+            navigate("/upload")
+          }
         >
-          <span><Icon name="play" /></span>
+          <span>
+            <Icon name="play" />
+          </span>
+
           <small>Practice</small>
         </button>
 
         <button
-          onClick={() => navigate("/upload")}
+          onClick={() =>
+            navigate("/upload")
+          }
         >
-          <span><Icon name="file" /></span>
+          <span>
+            <Icon name="file" />
+          </span>
+
           <small>Notes</small>
         </button>
 
         <button
-          onClick={() => navigate("/progress")}
+          onClick={() =>
+            navigate("/progress")
+          }
         >
-          <span><Icon name="chart" /></span>
+          <span>
+            <Icon name="chart" />
+          </span>
+
           <small>Progress</small>
         </button>
+
       </nav>
+
     </ResponsiveLayout>
   );
 }

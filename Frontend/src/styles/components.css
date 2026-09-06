@@ -1,7 +1,3 @@
-/* =========================================
-   DDIBA WELCOME SCREEN
-   ========================================= */
-
 .welcome-page {
   width: 100%;
   max-width: none;
@@ -23,11 +19,6 @@
 
   overflow: hidden;
 }
-
-
-/* =========================
-   TOP
-   ========================= */
 
 .welcome-header {
   height: 48px;
@@ -53,11 +44,6 @@
   font-weight: 650;
 }
 
-
-/* =========================
-   HERO AREA
-   ========================= */
-
 .welcome-hero-section {
   position: relative;
 
@@ -66,9 +52,6 @@
 
   margin-top: 2px;
 }
-
-
-/* Main Ddiba circle */
 
 .welcome-hero-circle {
   position: absolute;
@@ -99,11 +82,6 @@
   box-shadow:
     0 10px 25px rgba(74, 47, 185, 0.16);
 }
-
-
-/* =========================
-   FLOATING CHIPS
-   ========================= */
 
 .floating-chip {
   position: absolute;
@@ -149,9 +127,6 @@
   right: 0;
 }
 
-
-/* Purple sparkle beside AI */
-
 .sparkle-bubble {
   position: absolute;
 
@@ -177,11 +152,6 @@
   box-shadow:
     0 5px 12px rgba(76, 50, 189, 0.25);
 }
-
-
-/* =========================
-   TEXT AREA
-   ========================= */
 
 .welcome-text {
   text-align: center;
@@ -227,11 +197,6 @@
 
   line-height: 1.65;
 }
-
-
-/* =========================
-   BUTTONS
-   ========================= */
 
 .welcome-actions {
   display: grid;
@@ -290,11 +255,6 @@
   background: #e8edff;
 }
 
-
-/* =========================
-   BOTTOM MESSAGE
-   ========================= */
-
 .welcome-reassurance {
   width: max-content;
   max-width: 100%;
@@ -327,13 +287,6 @@
 
   font-size: 15px;
 }
-
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
-/* Small phones */
 
 @media (max-width: 480px) {
 
@@ -391,9 +344,6 @@
   }
 }
 
-
-/* Tablet / desktop */
-
 @media (min-width: 481px) {
   .welcome-page {
     max-width: none;
@@ -440,10 +390,6 @@
   }
 }
 
-/* =========================================
-   AUTH / CREATE ACCOUNT SCREEN
-   ========================================= */
-
 .auth-page {
   width: 100%;
   max-width: none;
@@ -481,11 +427,6 @@
   color: #5032be;
   font-size: 20px;
 }
-
-
-/* =========================
-   ADAPTIVE BANNER
-   ========================= */
 
 .adaptive-banner {
   min-height: 115px;
@@ -574,11 +515,6 @@
   line-height: 1.55;
 }
 
-
-/* =========================
-   HEADING
-   ========================= */
-
 .auth-title {
   margin-top: 8px;
   text-align: center;
@@ -594,11 +530,6 @@
 
   letter-spacing: 0;
 }
-
-
-/* =========================
-   LOGIN ACTIONS
-   ========================= */
 
 .auth-actions {
   display: grid;
@@ -731,11 +662,6 @@
   object-fit: contain;
 }
 
-
-/* =========================
-   PRIVACY CARD
-   ========================= */
-
 .privacy-card {
   margin-top: 21px;
 
@@ -783,11 +709,6 @@
   font-size: 12px;
   line-height: 1.45;
 }
-
-
-/* =========================
-   COMMUNITY CARD
-   ========================= */
 
 .community-card {
   margin-top: 18px;
@@ -882,11 +803,6 @@
   font-weight: 800;
 }
 
-
-/* =========================
-   EMAIL MODAL
-   ========================= */
-
 .auth-modal-backdrop {
   position: fixed;
 
@@ -970,11 +886,6 @@
     0 0 0 3px rgba(101, 72, 212, 0.1);
 }
 
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
-
 @media (max-width: 380px) {
 
   .auth-page {
@@ -1007,7 +918,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .auth-page {
@@ -1023,9 +933,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 3 — ONBOARDING INTRO
-   ========================================= */
 
 .onboarding-intro-page {
   width: 100%;
@@ -1041,11 +948,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* =========================
-   TOP BAR
-   ========================= */
 
 .onboarding-topbar {
   min-height: 64px;
@@ -1129,11 +1031,6 @@
   font-size: 12px;
   font-weight: 800;
 }
-
-
-/* =========================
-   HERO CARD
-   ========================= */
 
 .onboarding-hero-card {
   margin: 0 -18px 19px;
@@ -1227,11 +1124,6 @@
   font-size: 14px;
   line-height: 1.55;
 }
-
-
-/* =========================
-   BENEFIT CARDS
-   ========================= */
 
 .onboarding-benefits {
   display: grid;
@@ -1332,11 +1224,6 @@
   font-weight: 800;
 }
 
-
-/* =========================
-   ACTIONS
-   ========================= */
-
 .onboarding-main-btn {
   width: 100%;
   min-height: 52px;
@@ -1387,11 +1274,6 @@
   font-weight: 650;
 }
 
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 380px) {
 
   .onboarding-intro-page {
@@ -1429,7 +1311,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .onboarding-intro-page {
@@ -1452,9 +1333,6 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-/* =========================================
-   SCREEN 4 — LEARNING STYLE
-   ========================================= */
 
 .learning-style-page {
   width: 100%;
@@ -1471,11 +1349,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* =========================
-   PROGRESS
-   ========================= */
 
 .learning-progress-section {
   margin-top: 18px;
@@ -1527,11 +1400,6 @@
     );
 }
 
-
-/* =========================
-   HEADING
-   ========================= */
-
 .learning-style-heading {
   margin-top: 25px;
 }
@@ -1557,11 +1425,6 @@
   font-size: 15px;
   line-height: 1.5;
 }
-
-
-/* =========================
-   MULTI SELECT INFO
-   ========================= */
 
 .multi-select-info {
   margin-top: 20px;
@@ -1612,11 +1475,6 @@
   font-size: 9px;
   font-weight: 700;
 }
-
-
-/* =========================
-   OPTIONS
-   ========================= */
 
 .learning-options {
   display: grid;
@@ -1742,11 +1600,6 @@
   color: rgba(255, 255, 255, 0.83);
 }
 
-
-/* =========================
-   NEXT BUTTON
-   ========================= */
-
 .learning-next-btn {
   width: 100%;
   min-height: 52px;
@@ -1782,11 +1635,6 @@
   font-size: 21px;
 }
 
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 380px) {
 
   .learning-style-page {
@@ -1815,7 +1663,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .learning-style-page {
@@ -1831,9 +1678,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 5 — EXPLANATION PREFERENCE
-   ========================================= */
 
 .explanation-page {
   width: 100%;
@@ -1850,9 +1694,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* PROGRESS */
 
 .explanation-progress {
   margin-top: 18px;
@@ -1900,9 +1741,6 @@
     );
 }
 
-
-/* FLOW LABEL */
-
 .explanation-flow-label {
   display: inline-flex;
 
@@ -1914,9 +1752,6 @@
   font-size: 13px;
   font-weight: 750;
 }
-
-
-/* HEADING */
 
 .explanation-heading h1 {
   margin: 0 0 9px;
@@ -1939,9 +1774,6 @@
   font-size: 15px;
   line-height: 1.55;
 }
-
-
-/* OPTIONS */
 
 .explanation-options {
   display: grid;
@@ -2054,9 +1886,6 @@
   color: #5360aa;
 }
 
-
-/* CHECK CIRCLE */
-
 .explanation-select {
   width: 27px;
   height: 27px;
@@ -2079,9 +1908,6 @@
 
   color: #ffffff;
 }
-
-
-/* ACTION BUTTONS */
 
 .explanation-actions {
   display: grid;
@@ -2123,9 +1949,6 @@
     0 5px 12px rgba(75, 48, 187, 0.2);
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
 
   .explanation-page {
@@ -2151,7 +1974,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .explanation-page {
@@ -2167,9 +1989,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 6 — READING SUPPORT
-   ========================================= */
 
 .reading-support-page {
   width: 100%;
@@ -2186,11 +2005,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* =========================
-   PROGRESS
-   ========================= */
 
 .reading-progress {
   margin-top: 18px;
@@ -2238,11 +2052,6 @@
     );
 }
 
-
-/* =========================
-   HEADING
-   ========================= */
-
 .reading-heading {
   margin-top: 24px;
 }
@@ -2268,11 +2077,6 @@
   font-size: 15px;
   line-height: 1.55;
 }
-
-
-/* =========================
-   LIVE PREVIEW
-   ========================= */
 
 .reading-preview-card {
   margin-top: 20px;
@@ -2328,11 +2132,6 @@
   font-size: 17px;
   line-height: 1.75;
 }
-
-
-/* =========================
-   SUPPORT CARDS
-   ========================= */
 
 .reading-support-list {
   display: grid;
@@ -2407,11 +2206,6 @@
   line-height: 1.48;
 }
 
-
-/* =========================
-   TOGGLE
-   ========================= */
-
 .reading-toggle {
   width: 44px;
   height: 26px;
@@ -2463,11 +2257,6 @@
   left: 20px;
 }
 
-
-/* =========================
-   CONTINUE BUTTON
-   ========================= */
-
 .reading-continue-btn {
   width: 100%;
   min-height: 52px;
@@ -2503,11 +2292,6 @@
   font-size: 21px;
 }
 
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 380px) {
 
   .reading-support-page {
@@ -2537,7 +2321,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .reading-support-page {
@@ -2553,9 +2336,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 7 — PROFILE SUMMARY
-   ========================================= */
 
 .profile-summary-page {
   width: 100%;
@@ -2572,11 +2352,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* =========================
-   PROGRESS
-   ========================= */
 
 .profile-progress {
   margin-top: 18px;
@@ -2628,11 +2403,6 @@
     );
 }
 
-
-/* =========================
-   HEADING
-   ========================= */
-
 .profile-summary-heading {
   margin-top: 24px;
 }
@@ -2662,11 +2432,6 @@
 .profile-summary-heading strong {
   color: #171927;
 }
-
-
-/* =========================
-   PROFILE CARD
-   ========================= */
 
 .learner-profile-card {
   margin-top: 20px;
@@ -2751,11 +2516,6 @@
   font-weight: 800;
 }
 
-
-/* =========================
-   ACCOMMODATIONS
-   ========================= */
-
 .accommodations-card {
   margin-top: 15px;
 
@@ -2828,11 +2588,6 @@
   font-weight: 650;
 }
 
-
-/* =========================
-   PROMISE CARD
-   ========================= */
-
 .ddiba-promise-card {
   margin-top: 15px;
 
@@ -2890,11 +2645,6 @@
   line-height: 1.5;
 }
 
-
-/* =========================
-   START BUTTON
-   ========================= */
-
 .profile-start-btn {
   width: 100%;
   min-height: 52px;
@@ -2930,11 +2680,6 @@
   font-size: 21px;
 }
 
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 380px) {
 
   .profile-summary-page {
@@ -2964,7 +2709,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
 
   .profile-summary-page {
@@ -2980,9 +2724,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 8 — DASHBOARD
-   ========================================= */
 
 .dashboard-page {
   width: 100%;
@@ -3001,9 +2742,6 @@
 
   position: relative;
 }
-
-
-/* HEADER */
 
 .dashboard-header {
   display: flex;
@@ -3097,9 +2835,6 @@
   font-weight: 850;
 }
 
-
-/* GREETING */
-
 .dashboard-greeting {
   display: flex;
   align-items: center;
@@ -3170,9 +2905,6 @@
 
   background: #0b8a62;
 }
-
-
-/* STREAK */
 
 .dashboard-streak-card {
   margin-top: 20px;
@@ -3294,9 +3026,6 @@
   color: #80500d;
 }
 
-
-/* SECTION TITLE */
-
 .dashboard-section-heading {
   display: flex;
   align-items: center;
@@ -3327,9 +3056,6 @@
   font-size: 11px;
   font-weight: 700;
 }
-
-
-/* CORE MODE CARDS */
 
 .dashboard-mode-card {
   padding: 18px;
@@ -3452,9 +3178,6 @@
   color: #075c44;
 }
 
-
-/* CONTINUE LEARNING */
-
 .dashboard-continue-card {
   padding: 14px;
 
@@ -3543,9 +3266,6 @@
   font-size: 17px;
 }
 
-
-/* BOTTOM NAVIGATION */
-
 .dashboard-bottom-nav {
   width: 100%;
   height: 67px;
@@ -3598,9 +3318,6 @@
   font-weight: 850;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .dashboard-page {
     padding-left: 14px;
@@ -3622,7 +3339,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .dashboard-page {
     min-height: calc(100vh - 50px);
@@ -3641,9 +3357,6 @@
     border-radius: 0 0 30px 30px;
   }
 }
-/* =========================================
-   SCREEN 9 — UPLOAD MATERIAL
-   ========================================= */
 
 .upload-material-page {
   width: 100%;
@@ -3662,11 +3375,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* =========================
-   MAIN HEADER
-   ========================= */
 
 .upload-main-header {
   display: flex;
@@ -3760,11 +3468,6 @@
   font-weight: 850;
 }
 
-
-/* =========================
-   SUBHEADER
-   ========================= */
-
 .upload-subheader {
   margin-top: 20px;
 
@@ -3802,11 +3505,6 @@
 
   font-size: 22px;
 }
-
-
-/* =========================
-   READER LABEL + HEADING
-   ========================= */
 
 .upload-reader-label {
   display: inline-flex;
@@ -3846,11 +3544,6 @@
   font-size: 14px;
   line-height: 1.55;
 }
-
-
-/* =========================
-   FREE TIER
-   ========================= */
 
 .free-tier-card {
   margin-top: 18px;
@@ -3892,11 +3585,6 @@
     0 2px 6px rgba(40, 35, 80, 0.06);
 }
 
-
-/* =========================
-   INPUT TABS
-   ========================= */
-
 .upload-tabs {
   margin-top: 14px;
 
@@ -3934,11 +3622,6 @@
   box-shadow:
     0 2px 7px rgba(40, 35, 80, 0.09);
 }
-
-
-/* =========================
-   TEXT CARD
-   ========================= */
 
 .upload-text-card {
   margin-top: 18px;
@@ -4050,11 +3733,6 @@
   color: #087557;
 }
 
-
-/* =========================
-   VOICE / FILE CARDS
-   ========================= */
-
 .upload-alternative-card {
   margin-top: 18px;
 
@@ -4128,11 +3806,6 @@
   display: none;
 }
 
-
-/* =========================
-   SUBJECT FRAMING
-   ========================= */
-
 .subject-framing {
   margin-top: 17px;
 }
@@ -4174,11 +3847,6 @@
   color: #4d31bd;
 }
 
-
-/* =========================
-   MAKE EASIER BUTTON
-   ========================= */
-
 .make-easier-btn {
   width: 100%;
   min-height: 52px;
@@ -4219,11 +3887,6 @@
 
   cursor: not-allowed;
 }
-
-
-/* =========================
-   BOTTOM NAV
-   ========================= */
 
 .upload-bottom-nav {
   width: 100%;
@@ -4276,11 +3939,6 @@
   font-weight: 850;
 }
 
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
 @media (max-width: 380px) {
   .upload-material-page {
     padding-left: 14px;
@@ -4305,7 +3963,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .upload-material-page {
     min-height: calc(100vh - 50px);
@@ -4324,9 +3981,6 @@
     border-radius: 0 0 30px 30px;
   }
 }
-/* =========================================
-   SCREEN 10 — LESSON VIEW
-   ========================================= */
 
 .lesson-page {
   width: 100%;
@@ -4343,9 +3997,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* HEADER */
 
 .lesson-header {
   min-height: 64px;
@@ -4434,9 +4085,6 @@
   font-size: 14px;
 }
 
-
-/* META */
-
 .lesson-meta-row {
   margin-top: 17px;
 }
@@ -4455,9 +4103,6 @@
   font-size: 10px;
   font-weight: 800;
 }
-
-
-/* TITLE */
 
 .lesson-title-section {
   margin-top: 13px;
@@ -4486,9 +4131,6 @@
   font-size: 10px;
   font-weight: 700;
 }
-
-
-/* CONCEPT SNAPSHOT */
 
 .concept-card {
   margin-top: 17px;
@@ -4615,9 +4257,6 @@
   font-weight: 850;
 }
 
-
-/* KEY IDEA */
-
 .lesson-key-card {
   margin-top: 14px;
 
@@ -4646,9 +4285,6 @@
   font-size: 13px;
   line-height: 1.55;
 }
-
-
-/* ANALOGY */
 
 .lesson-analogy-card {
   margin-top: 14px;
@@ -4701,9 +4337,6 @@
   font-size: 13px;
   line-height: 1.55;
 }
-
-
-/* BREAKDOWN */
 
 .lesson-breakdown-card {
   margin-top: 14px;
@@ -4791,9 +4424,6 @@
   line-height: 1.45;
 }
 
-
-/* PRACTICE PROMPT */
-
 .lesson-check-card {
   margin-top: 16px;
 
@@ -4853,9 +4483,6 @@
   font-weight: 800;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .lesson-page {
     padding-left: 14px;
@@ -4890,7 +4517,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .lesson-page {
     min-height: calc(100vh - 50px);
@@ -4905,9 +4531,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 11 — PRACTICE
-   ========================================= */
 
 .practice-page {
   width: 100%;
@@ -4924,9 +4547,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* HEADER */
 
 .practice-header {
   display: flex;
@@ -5020,9 +4640,6 @@
   font-weight: 850;
 }
 
-
-/* TITLE */
-
 .practice-title-area {
   margin-top: 18px;
 
@@ -5086,9 +4703,6 @@
   font-size: 17px;
 }
 
-
-/* PROGRESS */
-
 .practice-progress-track {
   width: 100%;
   height: 6px;
@@ -5115,9 +4729,6 @@
       #6ce7ba
     );
 }
-
-
-/* QUESTION META */
 
 .practice-question-meta {
   margin-top: 21px;
@@ -5146,9 +4757,6 @@
   font-size: 10px;
   font-weight: 800;
 }
-
-
-/* QUESTION */
 
 .practice-question h2 {
   margin: 13px 0 14px;
@@ -5206,9 +4814,6 @@
 
   font-size: 9px;
 }
-
-
-/* ANSWERS */
 
 .practice-answers {
   display: grid;
@@ -5333,9 +4938,6 @@
   border-color: #563ac7;
 }
 
-
-/* FEEDBACK */
-
 .practice-feedback-card {
   margin-top: 14px;
 
@@ -5404,9 +5006,6 @@
   line-height: 1.5;
 }
 
-
-/* FINISH */
-
 .practice-finish-btn {
   width: 100%;
   min-height: 52px;
@@ -5443,9 +5042,6 @@
 
   cursor: not-allowed;
 }
-
-
-/* BOTTOM NAV */
 
 .practice-bottom-nav {
   width: 100%;
@@ -5498,9 +5094,6 @@
   font-weight: 850;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .practice-page {
     padding-left: 14px;
@@ -5520,7 +5113,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .practice-page {
     min-height: calc(100vh - 50px);
@@ -5538,9 +5130,7 @@
 
     border-radius: 0 0 30px 30px;
   }
-}/* =========================================
-   SCREEN 12 — PROGRESS
-   ========================================= */
+}
 
 .progress-page {
   width: 100%;
@@ -5557,9 +5147,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* HEADER */
 
 .progress-header {
   display: flex;
@@ -5648,9 +5235,6 @@
   font-weight: 850;
 }
 
-
-/* COMPLETE AREA */
-
 .progress-complete-area {
   margin-top: 23px;
   text-align: center;
@@ -5713,9 +5297,6 @@
   font-size: 13px;
   line-height: 1.5;
 }
-
-
-/* STREAK */
 
 .progress-streak-card {
   margin-top: 18px;
@@ -5815,9 +5396,6 @@
   color: #ffffff;
 }
 
-
-/* ACCURACY */
-
 .accuracy-card {
   margin-top: 14px;
 
@@ -5903,9 +5481,6 @@
   font-weight: 850;
 }
 
-
-/* STATS */
-
 .progress-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -5951,9 +5526,6 @@
 
   font-size: 9px;
 }
-
-
-/* REFLECTION */
 
 .reflection-card {
   margin-top: 14px;
@@ -6044,9 +5616,6 @@
   line-height: 1.45;
 }
 
-
-/* BUTTONS */
-
 .progress-practice-btn,
 .progress-dashboard-btn {
   width: 100%;
@@ -6088,9 +5657,6 @@
 
   color: #4d31bd;
 }
-
-
-/* BOTTOM NAV */
 
 .progress-bottom-nav {
   width: 100%;
@@ -6143,9 +5709,6 @@
   font-weight: 850;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .progress-page {
     padding-left: 14px;
@@ -6165,7 +5728,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .progress-page {
     min-height: calc(100vh - 50px);
@@ -6184,9 +5746,6 @@
     border-radius: 0 0 30px 30px;
   }
 }
-/* =========================================
-   SCREEN 13 — FLASHCARD DECK
-   ========================================= */
 
 .flashcard-deck-page {
   width: 100%;
@@ -6203,9 +5762,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* HEADER */
 
 .flashcard-header {
   min-height: 64px;
@@ -6291,9 +5847,6 @@
   font-weight: 850;
 }
 
-
-/* HEADING */
-
 .flashcard-deck-heading {
   margin-top: 22px;
 }
@@ -6333,9 +5886,6 @@
 
   font-size: 12px;
 }
-
-
-/* MASTERY */
 
 .flashcard-mastery-card {
   margin-top: 18px;
@@ -6408,9 +5958,6 @@
   font-size: 9px;
 }
 
-
-/* SAFE PACING */
-
 .flashcard-safe-card {
   margin-top: 14px;
 
@@ -6462,9 +6009,6 @@
   font-size: 10px;
 }
 
-
-/* SECTION HEADING */
-
 .flashcard-section-heading {
   display: flex;
   align-items: center;
@@ -6489,9 +6033,6 @@
 
   font-size: 10px;
 }
-
-
-/* GROUP CARDS */
 
 .flashcard-group-card {
   padding: 15px;
@@ -6590,9 +6131,6 @@
   color: #087557;
 }
 
-
-/* TOPICS */
-
 .flashcard-topic-list {
   margin-top: 12px;
 }
@@ -6660,9 +6198,6 @@
   font-size: 15px;
 }
 
-
-/* START BUTTON */
-
 .flashcard-start-btn {
   width: 100%;
   min-height: 52px;
@@ -6698,9 +6233,6 @@
   font-size: 20px;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .flashcard-deck-page {
     padding-left: 14px;
@@ -6724,7 +6256,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .flashcard-deck-page {
     min-height: calc(100vh - 50px);
@@ -6739,9 +6270,6 @@
       0 8px 35px rgba(25, 25, 45, 0.12);
   }
 }
-/* =========================================
-   SCREEN 14 — SESSION SUMMARY
-   ========================================= */
 
 .session-summary-page {
   width: 100%;
@@ -6758,9 +6286,6 @@
       #f8f8ff 100%
     );
 }
-
-
-/* HEADER */
 
 .session-summary-header {
   min-height: 64px;
@@ -6846,9 +6371,6 @@
   font-weight: 850;
 }
 
-
-/* HERO */
-
 .session-summary-hero {
   margin-top: 24px;
 
@@ -6891,9 +6413,6 @@
   font-size: 13px;
   line-height: 1.5;
 }
-
-
-/* MASTERY RING */
 
 .session-mastery-ring {
   width: 126px;
@@ -6940,9 +6459,6 @@
 
   font-size: 10px;
 }
-
-
-/* PERFORMANCE CARD */
 
 .session-performance-card {
   margin-top: 20px;
@@ -7060,9 +6576,6 @@
   font-size: 11px;
 }
 
-
-/* TOPIC STATUS */
-
 .session-topic-section {
   margin-top: 20px;
 }
@@ -7164,9 +6677,6 @@
     );
 }
 
-
-/* INSIGHT */
-
 .session-insight-card {
   margin-top: 15px;
 
@@ -7221,9 +6731,6 @@
   line-height: 1.5;
 }
 
-
-/* ACTIONS */
-
 .session-summary-actions {
   display: grid;
 
@@ -7264,9 +6771,6 @@
   color: #4d31bd;
 }
 
-
-/* RESPONSIVE */
-
 @media (max-width: 380px) {
   .session-summary-page {
     padding-left: 14px;
@@ -7296,7 +6800,6 @@
   }
 }
 
-
 @media (min-width: 700px) {
   .session-summary-page {
     min-height: 100vh;
@@ -7307,10 +6810,6 @@
     box-shadow: none;
   }
 }
-
-/* =========================================
-   FULL-SCREEN PAGE SHELL
-   ========================================= */
 
 .welcome-page,
 .auth-page,
@@ -7452,9 +6951,6 @@
     min-height: 280px;
   }
 }
-/* =========================================
-   PRACTICE — FREE TEXT
-   ========================================= */
 
 .practice-free-text-card {
   margin-top: 16px;
@@ -7494,4 +6990,354 @@
 
   box-shadow:
     0 0 0 3px rgba(96, 70, 207, 0.1);
+}
+
+.ddiba-voice-controls {
+  width: 100%;
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ddiba-voice-start-btn,
+.ddiba-voice-stop-btn {
+  width: 100%;
+  min-height: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+
+  padding: 14px 18px;
+
+  border-radius: 20px;
+  border: none;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-family: inherit;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.ddiba-voice-start-btn {
+  background:
+    linear-gradient(
+      135deg,
+      #6f56d9,
+      #8b6be8
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 24px
+    rgba(111, 86, 217, 0.25);
+}
+
+.ddiba-voice-start-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 28px
+    rgba(111, 86, 217, 0.32);
+}
+
+.ddiba-voice-start-btn:active {
+  transform: scale(0.98);
+}
+
+.ddiba-voice-start-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.ddiba-voice-btn-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+.ddiba-voice-btn-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ddiba-voice-btn-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.ddiba-voice-btn-copy strong {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.ddiba-voice-btn-copy small {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.82;
+}
+
+.ddiba-voice-stop-btn {
+  background: #fff0f3;
+  color: #a3314d;
+
+  border:
+    1px solid
+    rgba(163, 49, 77, 0.15);
+
+  box-shadow:
+    0 8px 20px
+    rgba(163, 49, 77, 0.1);
+}
+
+.ddiba-voice-stop-btn:hover {
+  transform: translateY(-1px);
+}
+
+.ddiba-voice-stop-icon {
+  width: 48px;
+  height: 48px;
+
+  display: grid;
+  place-items: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #c13d5c;
+
+  font-size: 14px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(163, 49, 77, 0.12);
+}
+
+.ddiba-speaking-stop-btn {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 11px 14px;
+
+  border-radius: 14px;
+
+  border:
+    1px solid #ddd7fb;
+
+  background: #f6f3ff;
+  color: #5d47bb;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.ddiba-speaking-stop-btn:hover {
+  background: #eee9ff;
+}
+
+.ddiba-listening-indicator {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-top: 12px;
+  padding: 13px 16px;
+
+  border-radius: 16px;
+
+  background: #effcf7;
+
+  border:
+    1px solid #d2f4e5;
+
+  color: #176b53;
+}
+
+.ddiba-listening-indicator > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ddiba-listening-indicator strong {
+  font-size: 13px;
+}
+
+.ddiba-listening-indicator small {
+  font-size: 10px;
+  opacity: 0.76;
+}
+
+.ddiba-listening-waves {
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ddiba-listening-waves span {
+  display: block;
+
+  width: 4px;
+  height: 10px;
+
+  border-radius: 999px;
+
+  background: #24a67c;
+
+  animation:
+    ddibaVoiceWave
+    0.85s ease-in-out
+    infinite;
+}
+
+.ddiba-listening-waves span:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.ddiba-listening-waves span:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+.ddiba-listening-waves span:nth-child(4) {
+  animation-delay: 0.36s;
+}
+
+@keyframes ddibaVoiceWave {
+  0%,
+  100% {
+    height: 8px;
+  }
+
+  50% {
+    height: 26px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .ddiba-voice-start-btn,
+  .ddiba-voice-stop-btn {
+    min-height: 70px;
+    padding: 12px 14px;
+  }
+
+  .ddiba-voice-btn-icon,
+  .ddiba-voice-stop-icon {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+.ddiba-paste-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid #ddd7fb;
+  border-radius: 999px;
+  background: #f6f3ff;
+  color: #5d47bb;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ddiba-paste-btn:hover {
+  background: #eee9ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(93, 71, 187, 0.12);
+}
+
+.ddiba-ask-btn {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 12px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #5133c0, #684fe0);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(75, 48, 187, 0.2);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.ddiba-ask-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 20px rgba(75, 48, 187, 0.26);
+}
+
+.ddiba-ask-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.ddiba-ask-btn:disabled {
+  background: #eceaf6;
+  color: #aaa5bd;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.upload-alternative-card textarea {
+  min-height: 96px;
+  background: #fbfbff;
+  color: #262938;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.upload-alternative-card textarea:focus {
+  border-color: #6046cf !important;
+  box-shadow: 0 0 0 3px rgba(96, 70, 207, 0.1);
+}
+
+@media (min-width: 1024px) {
+  .upload-alternative-card textarea {
+    min-height: 96px;
+  }
 }

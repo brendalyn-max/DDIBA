@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Icon from "../components/ui/Icon";
 import ResponsiveLayout from "../components/layout/ResponsiveLayout";
 import LogoMark from "../components/Logo/LogoMark";
-
-const API_BASE_URL = "http://127.0.0.1:8000";
+import { apiFetch } from "../services/api";
 
 const explanationOptions = [
   {
@@ -60,31 +59,15 @@ export default function ExplanationPreference() {
       setSaving(true);
       setError("");
 
-      const response = await fetch(
-        `${API_BASE_URL}/api/profile/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            short_explanations: selected.includes("simple"),
-            step_by_step: selected.includes("breakdown"),
-          }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.detail ||
-            "Could not save your explanation preferences."
-        );
-      }
+      await apiFetch("/api/profile/", {
+        method: "PATCH",
+        body: JSON.stringify({
+          short_explanations: selected.includes("simple"),
+          step_by_step: selected.includes("breakdown"),
+        }),
+      });
 
       navigate("/onboarding/reading-support");
-
     } catch (err) {
       console.error(err);
 
@@ -92,7 +75,6 @@ export default function ExplanationPreference() {
         err.message ||
           "Something went wrong while saving your preferences."
       );
-
     } finally {
       setSaving(false);
     }

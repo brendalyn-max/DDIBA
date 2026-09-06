@@ -18,19 +18,46 @@ Including another URLconf
 # from django.urls import path
 
 from django.contrib import admin
-from django.urls import path
-from api.views import test_api
+from django.urls import include, path
 
 from api.views import (
     adapt_lesson,
     practice_questions,
     evaluate_answer,
     learner_profile,
+    dashboard_data,
+    progress_data,
+    test_api,
+)
+from api.views import (
+    adapt_lesson,
+    practice_questions,
+    evaluate_answer,
+    learner_profile,
+    dashboard_data,
+    progress_data,
+    extract_file,
+    test_api,
+)
+from api.views import (
+    adapt_lesson,
+    practice_questions,
+    evaluate_answer,
+    learner_profile,
+    dashboard_data,
+    progress_data,
+    extract_file,
+    voice_chat,
+    test_api,
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 
+    # Authentication endpoints
+    path("api/auth/", include("learn.urls")),
+
+    # AI learning endpoints
     path(
         "api/adapt-lesson/",
         adapt_lesson,
@@ -49,9 +76,38 @@ urlpatterns = [
         name="evaluate_answer",
     ),
 
+    # Learner data
     path(
         "api/profile/",
         learner_profile,
         name="learner_profile",
     ),
+
+    path(
+        "api/dashboard/",
+        dashboard_data,
+        name="dashboard_data",
+    ),
+
+    path(
+        "api/progress/",
+        progress_data,
+        name="progress_data",
+    ),
+
+    path(
+        "api/test/",
+        test_api,
+        name="test_api",
+    ),
+    path(
+    "api/extract-file/",
+    extract_file,
+    name="extract_file",
+),
+path(
+    "api/voice-chat/",
+    voice_chat,
+    name="voice_chat",
+),
 ]
